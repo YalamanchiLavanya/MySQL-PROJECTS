@@ -213,7 +213,7 @@ This project helps practice:
 Student-Management-System/
 │
 ├── student_management.sql
-├── ER_Diagram.png
+├── Student Mangement.jpg
 └── README.md
 ```
 
