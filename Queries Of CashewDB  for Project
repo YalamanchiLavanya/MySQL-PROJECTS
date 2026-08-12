@@ -1,0 +1,385 @@
+-- =====================================================================
+-- CASHEWDB - Queries for Website Development
+-- Based on tables: Farmers, Farms, Harvest, Sales, Workers, Fertilizers,
+-- Expenses, Equipment, GovernmentSubsidies, PestControl, Irrigation
+-- =====================================================================
+
+
+-- ---------------------------------------------------------------------
+-- 1. FARMER DIRECTORY PAGE
+--    List all farmers with their village/district (for a listing page)
+-- ---------------------------------------------------------------------
+SELECT FarmerID, FarmerName, Phone, Village, District, LandArea
+FROM Farmers
+ORDER BY FarmerName;
+
+
+-- ---------------------------------------------------------------------
+-- 2. FARMER PROFILE PAGE
+--    Full profile: farmer details + all their farms
+--    (use ?FarmerID = <id> as a parameter in your backend)
+-- ---------------------------------------------------------------------
+SELECT f.FarmerID, f.FarmerName, f.Phone, f.Village, f.District, f.LandArea,
+       fa.FarmID, fa.FarmLocation, fa.TotalArea, fa.NumberOfTrees,
+       fa.SoilType, fa.IrrigationType
+FROM Farmers f
+JOIN Farms fa ON f.FarmerID = fa.FarmerID
+WHERE f.FarmerID = ?;
+
+
+-- ---------------------------------------------------------------------
+-- 3. FARM DETAIL PAGE
+--    A single farm with its owner's contact info
+-- ---------------------------------------------------------------------
+SELECT fa.*, f.FarmerName, f.Phone
+FROM Farms fa
+JOIN Farmers f ON fa.FarmerID = f.FarmerID
+WHERE fa.FarmID = ?;
+
+
+-- ---------------------------------------------------------------------
+-- 4. HARVEST HISTORY FOR A FARM
+--    Show harvest records with grade, for a farm detail/analytics page
+-- ---------------------------------------------------------------------
+SELECT h.HarvestID, h.HarvestDate, h.QuantityKg, h.Grade, h.Season
+FROM Harvest h
+WHERE h.FarmID = ?
+ORDER BY h.HarvestDate DESC;
+
+
+-- ---------------------------------------------------------------------
+-- 5. SALES HISTORY LINKED TO HARVEST
+--    Useful for a "Sales" tab on a farm/farmer page
+-- ---------------------------------------------------------------------
+SELECT s.SaleID, h.HarvestDate, fa.FarmLocation, f.FarmerName,
+       s.BuyerName, s.QuantitySoldKg, s.PricePerKg, s.TotalAmount,
+       s.SaleDate, s.PaymentMode
+FROM Sales s
+JOIN Harvest h ON s.HarvestID = h.HarvestID
+JOIN Farms fa ON h.FarmID = fa.FarmID
+JOIN Farmers f ON fa.FarmerID = f.FarmerID
+ORDER BY s.SaleDate DESC;
+
+
+-- ---------------------------------------------------------------------
+-- 6. TOTAL REVENUE PER FARMER (for a dashboard/leaderboard)
+-- ---------------------------------------------------------------------
+SELECT f.FarmerID, f.FarmerName,
+       SUM(s.TotalAmount) AS TotalRevenue,
+       SUM(s.QuantitySoldKg) AS TotalKgSold
+FROM Farmers f
+JOIN Farms fa ON f.FarmerID = fa.FarmerID
+JOIN Harvest h ON fa.FarmID = h.FarmID
+JOIN Sales s ON h.HarvestID = s.HarvestID
+GROUP BY f.FarmerID, f.FarmerName
+ORDER BY TotalRevenue DESC;
+
+
+-- ---------------------------------------------------------------------
+-- 7. TOTAL EXPENSES PER FARM (for a profit/loss view)
+-- ---------------------------------------------------------------------
+SELECT fa.FarmID, fa.FarmLocation, f.FarmerName,
+       SUM(e.Amount) AS TotalExpenses
+FROM Farms fa
+JOIN Farmers f ON fa.FarmerID = f.FarmerID
+JOIN Expenses e ON fa.FarmID = e.FarmID
+GROUP BY fa.FarmID, fa.FarmLocation, f.FarmerName
+ORDER BY TotalExpenses DESC;
+
+
+-- ---------------------------------------------------------------------
+-- 8. PROFIT / LOSS PER FARM (Revenue - Expenses)
+--    Great for a "Farm Performance" widget
+-- ---------------------------------------------------------------------
+SELECT fa.FarmID, fa.FarmLocation, f.FarmerName,
+       COALESCE(rev.TotalRevenue, 0) AS TotalRevenue,
+       COALESCE(exp.TotalExpenses, 0) AS TotalExpenses,
+       COALESCE(rev.TotalRevenue, 0) - COALESCE(exp.TotalExpenses, 0) AS NetProfit
+FROM Farms fa
+JOIN Farmers f ON fa.FarmerID = f.FarmerID
+LEFT JOIN (
+    SELECT h.FarmID, SUM(s.TotalAmount) AS TotalRevenue
+    FROM Harvest h JOIN Sales s ON h.HarvestID = s.HarvestID
+    GROUP BY h.FarmID
+) rev ON fa.FarmID = rev.FarmID
+LEFT JOIN (
+    SELECT FarmID, SUM(Amount) AS TotalExpenses
+    FROM Expenses
+    GROUP BY FarmID
+) exp ON fa.FarmID = exp.FarmID
+ORDER BY NetProfit DESC;
+
+
+-- ---------------------------------------------------------------------
+-- 9. TOP BUYERS (for a "Buyers" analytics page)
+-- ---------------------------------------------------------------------
+SELECT BuyerName,
+       COUNT(*) AS NumberOfPurchases,
+       SUM(QuantitySoldKg) AS TotalKgBought,
+       SUM(TotalAmount) AS TotalSpent
+FROM Sales
+GROUP BY BuyerName
+ORDER BY TotalSpent DESC;
+
+
+-- ---------------------------------------------------------------------
+-- 10. HARVEST GRADE DISTRIBUTION (for a pie/bar chart)
+-- ---------------------------------------------------------------------
+SELECT Grade, COUNT(*) AS NumberOfHarvests, SUM(QuantityKg) AS TotalKg
+FROM Harvest
+GROUP BY Grade;
+
+
+-- ---------------------------------------------------------------------
+-- 11. MONTHLY SALES TREND (for a line chart on dashboard homepage)
+-- ---------------------------------------------------------------------
+SELECT DATE_FORMAT(SaleDate, '%Y-%m') AS SaleMonth,
+       SUM(TotalAmount) AS MonthlyRevenue,
+       SUM(QuantitySoldKg) AS MonthlyKgSold
+FROM Sales
+GROUP BY DATE_FORMAT(SaleDate, '%Y-%m')
+ORDER BY SaleMonth;
+
+
+-- ---------------------------------------------------------------------
+-- 12. PENDING GOVERNMENT SUBSIDIES (for a "Subsidy Status" page)
+-- ---------------------------------------------------------------------
+SELECT gs.SubsidyID, f.FarmerName, f.Phone, gs.SchemeName,
+       gs.Amount, gs.SanctionDate, gs.Status
+FROM GovernmentSubsidies gs
+JOIN Farmers f ON gs.FarmerID = f.FarmerID
+WHERE gs.Status = 'Pending';
+
+
+-- ---------------------------------------------------------------------
+-- 13. EQUIPMENT STATUS OVERVIEW (for a maintenance/inventory page)
+-- ---------------------------------------------------------------------
+SELECT eq.EquipmentID, fa.FarmLocation, f.FarmerName,
+       eq.EquipmentName, eq.Brand, eq.Status, eq.Cost
+FROM Equipment eq
+JOIN Farms fa ON eq.FarmID = fa.FarmID
+JOIN Farmers f ON fa.FarmerID = f.FarmerID
+WHERE eq.Status != 'Working'
+ORDER BY eq.Status;
+
+
+-- ---------------------------------------------------------------------
+-- 14. WORKER DIRECTORY BY SKILL (for a "Hire a Worker" page)
+-- ---------------------------------------------------------------------
+SELECT WorkerID, WorkerName, Gender, Age, Phone, Village, DailyWage, Skill
+FROM Workers
+WHERE Skill = ?
+ORDER BY DailyWage;
+
+
+-- ---------------------------------------------------------------------
+-- 15. PEST CONTROL HISTORY PER FARM (for a "Farm Health" tab)
+-- ---------------------------------------------------------------------
+SELECT pc.PestControlID, pc.PestName, pc.PesticideUsed,
+       pc.ApplicationDate, pc.Cost
+FROM PestControl pc
+WHERE pc.FarmID = ?
+ORDER BY pc.ApplicationDate DESC;
+
+
+-- ---------------------------------------------------------------------
+-- 16. IRRIGATION WATER USAGE SUMMARY (for a sustainability dashboard)
+-- ---------------------------------------------------------------------
+SELECT fa.FarmID, fa.FarmLocation, ir.IrrigationMethod,
+       SUM(ir.WaterUsedLiters) AS TotalWaterUsed
+FROM Irrigation ir
+JOIN Farms fa ON ir.FarmID = fa.FarmID
+GROUP BY fa.FarmID, fa.FarmLocation, ir.IrrigationMethod
+ORDER BY TotalWaterUsed DESC;
+
+
+-- ---------------------------------------------------------------------
+-- 17. SEARCH FARMERS BY NAME OR VILLAGE (for a search bar feature)
+-- ---------------------------------------------------------------------
+SELECT FarmerID, FarmerName, Phone, Village, District
+FROM Farmers
+WHERE FarmerName LIKE CONCAT('%', ?, '%')
+   OR Village LIKE CONCAT('%', ?, '%');
+
+
+-- ---------------------------------------------------------------------
+-- 18. HOMEPAGE SUMMARY STATS (KPI cards: total farmers, farms, revenue)
+-- ---------------------------------------------------------------------
+SELECT
+    (SELECT COUNT(*) FROM Farmers) AS TotalFarmers,
+    (SELECT COUNT(*) FROM Farms) AS TotalFarms,
+    (SELECT SUM(QuantityKg) FROM Harvest) AS TotalHarvestKg,
+    (SELECT SUM(TotalAmount) FROM Sales) AS TotalRevenue,
+    (SELECT COUNT(*) FROM GovernmentSubsidies WHERE Status = 'Pending') AS PendingSubsidies;
+
+
+-- =====================================================================
+-- EQUIPMENT SHARING / BORROWING FEATURE
+-- Note: there's no "borrow" table in the DB. These queries work by
+-- comparing which farmers OWN a given equipment vs which DON'T, so the
+-- website can suggest a lender to a farmer who lacks that equipment.
+-- =====================================================================
+
+-- ---------------------------------------------------------------------
+-- 19. FARMERS WHO OWN A GIVEN EQUIPMENT (potential lenders)
+--     Only shows equipment that is currently working (not under repair)
+-- ---------------------------------------------------------------------
+SELECT DISTINCT f.FarmerID, f.FarmerName, f.Phone, f.Village, f.District,
+       eq.EquipmentName, eq.Status
+FROM Equipment eq
+JOIN Farms fa ON eq.FarmID = fa.FarmID
+JOIN Farmers f ON fa.FarmerID = f.FarmerID
+WHERE eq.EquipmentName = ?          -- e.g. 'Tractor'
+  AND eq.Status = 'Working';
+
+
+-- ---------------------------------------------------------------------
+-- 20. FARMERS WHO DO NOT OWN A GIVEN EQUIPMENT (potential borrowers)
+-- ---------------------------------------------------------------------
+SELECT f.FarmerID, f.FarmerName, f.Phone, f.Village, f.District
+FROM Farmers f
+WHERE f.FarmerID NOT IN (
+    SELECT fa.FarmerID
+    FROM Equipment eq
+    JOIN Farms fa ON eq.FarmID = fa.FarmID
+    WHERE eq.EquipmentName = ?      -- same equipment name as above
+);
+
+
+-- ---------------------------------------------------------------------
+-- 21. BORROW MATCHING: for every farmer who lacks the equipment,
+--     list possible lenders (farmers who own it), same-district
+--     lenders ranked first
+-- ---------------------------------------------------------------------
+SELECT
+    borrower.FarmerID   AS BorrowerID,
+    borrower.FarmerName AS BorrowerName,
+    borrower.Village    AS BorrowerVillage,
+    borrower.District   AS BorrowerDistrict,
+    lender.FarmerID     AS LenderID,
+    lender.FarmerName   AS LenderName,
+    lender.Phone        AS LenderPhone,
+    lender.Village      AS LenderVillage,
+    eq.EquipmentName,
+    (borrower.District = lender.District) AS SameDistrict
+FROM Farmers borrower
+JOIN Equipment eq ON eq.EquipmentName = ?      -- equipment being requested
+JOIN Farms lenderFarm ON eq.FarmID = lenderFarm.FarmID
+JOIN Farmers lender ON lenderFarm.FarmerID = lender.FarmerID
+WHERE eq.Status = 'Working'
+  AND lender.FarmerID != borrower.FarmerID
+  AND borrower.FarmerID NOT IN (
+      SELECT fa2.FarmerID
+      FROM Equipment eq2
+      JOIN Farms fa2 ON eq2.FarmID = fa2.FarmID
+      WHERE eq2.EquipmentName = ?                -- same equipment name again
+  )
+ORDER BY borrower.FarmerID, SameDistrict DESC;
+
+
+-- ---------------------------------------------------------------------
+-- 22. EQUIPMENT GAP OVERVIEW (all equipment types, how many farmers
+--     own vs lack each one) - good for a "Suggested Sharing" widget
+--     on the homepage/dashboard
+-- ---------------------------------------------------------------------
+SELECT eq.EquipmentName,
+       COUNT(DISTINCT fa.FarmerID) AS FarmersWhoOwn,
+       (SELECT COUNT(*) FROM Farmers) - COUNT(DISTINCT fa.FarmerID) AS FarmersWithout
+FROM Equipment eq
+JOIN Farms fa ON eq.FarmID = fa.FarmID
+GROUP BY eq.EquipmentName
+ORDER BY FarmersWithout DESC;
+
+
+-- =====================================================================
+-- PROFIT CALCULATION
+-- Profit = Total Sales Revenue - (Expenses + Fertilizer Cost +
+--          Equipment Cost + Pest Control Cost)
+-- =====================================================================
+
+-- ---------------------------------------------------------------------
+-- 23. PROFIT PER FARM (full cost breakdown)
+--     Shows revenue, each cost category, and the final net profit
+-- ---------------------------------------------------------------------
+WITH revenue AS (
+    SELECT h.FarmID, SUM(s.TotalAmount) AS TotalRevenue
+    FROM Harvest h JOIN Sales s ON h.HarvestID = s.HarvestID
+    GROUP BY h.FarmID
+),
+expenses AS (
+    SELECT FarmID, SUM(Amount) AS TotalExpenses
+    FROM Expenses GROUP BY FarmID
+),
+fert AS (
+    SELECT FarmID, SUM(Cost) AS TotalFertilizerCost
+    FROM Fertilizers GROUP BY FarmID
+),
+equip AS (
+    SELECT FarmID, SUM(Cost) AS TotalEquipmentCost
+    FROM Equipment GROUP BY FarmID
+),
+pest AS (
+    SELECT FarmID, SUM(Cost) AS TotalPestControlCost
+    FROM PestControl GROUP BY FarmID
+)
+SELECT
+    fa.FarmID, fa.FarmLocation, f.FarmerName,
+    COALESCE(revenue.TotalRevenue, 0)          AS TotalRevenue,
+    COALESCE(expenses.TotalExpenses, 0)        AS TotalExpenses,
+    COALESCE(fert.TotalFertilizerCost, 0)      AS TotalFertilizerCost,
+    COALESCE(equip.TotalEquipmentCost, 0)      AS TotalEquipmentCost,
+    COALESCE(pest.TotalPestControlCost, 0)     AS TotalPestControlCost,
+    COALESCE(revenue.TotalRevenue, 0)
+        - ( COALESCE(expenses.TotalExpenses, 0)
+          + COALESCE(fert.TotalFertilizerCost, 0)
+          + COALESCE(equip.TotalEquipmentCost, 0)
+          + COALESCE(pest.TotalPestControlCost, 0) )   AS NetProfit
+FROM Farms fa
+JOIN Farmers f ON fa.FarmerID = f.FarmerID
+LEFT JOIN revenue ON fa.FarmID = revenue.FarmID
+LEFT JOIN expenses ON fa.FarmID = expenses.FarmID
+LEFT JOIN fert ON fa.FarmID = fert.FarmID
+LEFT JOIN equip ON fa.FarmID = equip.FarmID
+LEFT JOIN pest ON fa.FarmID = pest.FarmID
+ORDER BY NetProfit DESC;
+
+
+-- ---------------------------------------------------------------------
+-- 24. PROFIT PER FARMER (rolled up across all their farms)
+--     Use this if a farmer can own more than one farm
+-- ---------------------------------------------------------------------
+WITH revenue AS (
+    SELECT fa.FarmerID, SUM(s.TotalAmount) AS TotalRevenue
+    FROM Harvest h
+    JOIN Sales s ON h.HarvestID = s.HarvestID
+    JOIN Farms fa ON h.FarmID = fa.FarmID
+    GROUP BY fa.FarmerID
+),
+costs AS (
+    SELECT fa.FarmerID, SUM(total_cost.Cost) AS TotalCosts
+    FROM Farms fa
+    JOIN (
+        SELECT FarmID, Amount AS Cost FROM Expenses
+        UNION ALL
+        SELECT FarmID, Cost FROM Fertilizers
+        UNION ALL
+        SELECT FarmID, Cost FROM Equipment
+        UNION ALL
+        SELECT FarmID, Cost FROM PestControl
+    ) total_cost ON fa.FarmID = total_cost.FarmID
+    GROUP BY fa.FarmerID
+)
+SELECT
+    f.FarmerID, f.FarmerName,
+    COALESCE(revenue.TotalRevenue, 0) AS TotalRevenue,
+    COALESCE(costs.TotalCosts, 0)     AS TotalCosts,
+    COALESCE(revenue.TotalRevenue, 0) - COALESCE(costs.TotalCosts, 0) AS NetProfit
+FROM Farmers f
+LEFT JOIN revenue ON f.FarmerID = revenue.FarmerID
+LEFT JOIN costs ON f.FarmerID = costs.FarmerID
+ORDER BY NetProfit DESC;
+
+
+
+
+
