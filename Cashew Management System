@@ -1,0 +1,1172 @@
+mysql> CREATE DATABASE CASHEWDB;
+Query OK, 1 row affected (0.06 sec)
+
+mysql> USE CASHEWDB;
+Database changed
+mysql> CREATE TABLE Farmers (
+    ->     FarmerID INT PRIMARY KEY,
+    ->     FarmerName VARCHAR(100),
+    ->     Phone VARCHAR(15),
+    ->     Village VARCHAR(100),
+    ->     District VARCHAR(100),
+    ->     LandArea DECIMAL(5,2)
+    -> );
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> INSERT INTO Farmers (FarmerID, FarmerName, Phone, Village, District, LandArea) VALUES
+    -> (1, 'K. Appala Naidu', '9876543210', 'Boddapadu', 'Srikakulam', 6.50),
+    -> (2, 'P. Ramesh', '9876543211', 'Garudakhandi', 'Srikakulam', 8.20),
+    -> (3, 'B. Krishna Rao', '9876543212', 'Ganguvada', 'Srikakulam', 5.80),
+    -> (4, 'T. Venkata Rao', '9876543213', 'Pedanchala', 'Srikakulam', 7.40),
+    -> (5, 'D. Srinivasa Rao', '9876543214', 'Rentikota', 'Srikakulam', 9.10),
+    -> (6, 'M. Satyanarayana', '9876543215', 'Haripuram', 'Srikakulam', 6.90),
+    -> (7, 'G. Ravi Kumar', '9876543216', 'Mandasa', 'Srikakulam', 5.30),
+    -> (8, 'Y. Suresh Babu', '9876543217', 'Baligam', 'Srikakulam', 8.80),
+    -> (9, 'N. Mohan Rao', '9876543218', 'Akkupalli', 'Srikakulam', 7.00),
+    -> (10, 'R. Chandra Sekhar', '9876543219', 'Bathupuram', 'Srikakulam', 6.10),
+    -> (11, 'C. Ganesh', '9876543220', 'Dokulapadu', 'Srikakulam', 5.60),
+    -> (12, 'S. Narayana', '9876543221', 'Kanchili', 'Srikakulam', 9.50),
+    -> (13, 'L. Hari Krishna', '9876543222', 'Bhogabeni', 'Srikakulam', 7.80),
+    -> (14, 'A. Jagadeesh', '9876543223', 'Yenduva', 'Srikakulam', 6.70),
+    -> (15, 'K. Lakshmana Rao', '9876543224', 'Baruva', 'Srikakulam', 8.40),
+    -> (16, 'P. Rajesh', '9876543225', 'Korlam', 'Srikakulam', 5.90),
+    -> (17, 'B. Apparao', '9876543226', 'Mulapeta', 'Srikakulam', 7.30),
+    -> (18, 'T. Siva Kumar', '9876543227', 'Kaviti', 'Srikakulam', 9.20),
+    -> (19, 'G. Bhaskar Rao', '9876543228', 'Bejjiputti', 'Srikakulam', 6.80),
+    -> (20, 'D. Venkatesh', '9876543229', 'Ichchapuram', 'Srikakulam', 8.60);
+Query OK, 20 rows affected (0.05 sec)
+Records: 20  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM FARMERS;
++----------+-------------------+------------+--------------+------------+----------+
+| FarmerID | FarmerName        | Phone      | Village      | District   | LandArea |
++----------+-------------------+------------+--------------+------------+----------+
+|        1 | K. Appala Naidu   | 9876543210 | Boddapadu    | Srikakulam |     6.50 |
+|        2 | P. Ramesh         | 9876543211 | Garudakhandi | Srikakulam |     8.20 |
+|        3 | B. Krishna Rao    | 9876543212 | Ganguvada    | Srikakulam |     5.80 |
+|        4 | T. Venkata Rao    | 9876543213 | Pedanchala   | Srikakulam |     7.40 |
+|        5 | D. Srinivasa Rao  | 9876543214 | Rentikota    | Srikakulam |     9.10 |
+|        6 | M. Satyanarayana  | 9876543215 | Haripuram    | Srikakulam |     6.90 |
+|        7 | G. Ravi Kumar     | 9876543216 | Mandasa      | Srikakulam |     5.30 |
+|        8 | Y. Suresh Babu    | 9876543217 | Baligam      | Srikakulam |     8.80 |
+|        9 | N. Mohan Rao      | 9876543218 | Akkupalli    | Srikakulam |     7.00 |
+|       10 | R. Chandra Sekhar | 9876543219 | Bathupuram   | Srikakulam |     6.10 |
+|       11 | C. Ganesh         | 9876543220 | Dokulapadu   | Srikakulam |     5.60 |
+|       12 | S. Narayana       | 9876543221 | Kanchili     | Srikakulam |     9.50 |
+|       13 | L. Hari Krishna   | 9876543222 | Bhogabeni    | Srikakulam |     7.80 |
+|       14 | A. Jagadeesh      | 9876543223 | Yenduva      | Srikakulam |     6.70 |
+|       15 | K. Lakshmana Rao  | 9876543224 | Baruva       | Srikakulam |     8.40 |
+|       16 | P. Rajesh         | 9876543225 | Korlam       | Srikakulam |     5.90 |
+|       17 | B. Apparao        | 9876543226 | Mulapeta     | Srikakulam |     7.30 |
+|       18 | T. Siva Kumar     | 9876543227 | Kaviti       | Srikakulam |     9.20 |
+|       19 | G. Bhaskar Rao    | 9876543228 | Bejjiputti   | Srikakulam |     6.80 |
+|       20 | D. Venkatesh      | 9876543229 | Ichchapuram  | Srikakulam |     8.60 |
++----------+-------------------+------------+--------------+------------+----------+
+20 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Farms (
+    ->     FarmID INT PRIMARY KEY,
+    ->     FarmerID INT,
+    ->     FarmLocation VARCHAR(100),
+    ->     TotalArea DECIMAL(5,2),
+    ->     NumberOfTrees INT,
+    ->     SoilType VARCHAR(50),
+    ->     IrrigationType VARCHAR(50),
+    ->     FOREIGN KEY (FarmerID) REFERENCES Farmers(FarmerID)
+    -> );
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> INSERT INTO Farms (FarmID, FarmerID, FarmLocation, TotalArea, NumberOfTrees, SoilType, IrrigationType) VALUES
+    -> (101, 1, 'Boddapadu', 6.50, 520, 'Red Sandy', 'Drip'),
+    -> (102, 2, 'Garudakhandi', 8.20, 680, 'Red Loamy', 'Sprinkler'),
+    -> (103, 3, 'Ganguvada', 5.80, 470, 'Laterite', 'Drip'),
+    -> (104, 4, 'Pedanchala', 7.40, 620, 'Red Sandy', 'Canal'),
+    -> (105, 5, 'Rentikota', 9.10, 810, 'Laterite', 'Drip'),
+    -> (106, 6, 'Haripuram', 6.90, 590, 'Red Loamy', 'Sprinkler'),
+    -> (107, 7, 'Mandasa', 5.30, 430, 'Red Sandy', 'Borewell'),
+    -> (108, 8, 'Baligam', 8.80, 760, 'Laterite', 'Drip'),
+    -> (109, 9, 'Akkupalli', 7.00, 610, 'Red Loamy', 'Canal'),
+    -> (110, 10, 'Bathupuram', 6.10, 510, 'Red Sandy', 'Sprinkler'),
+    -> (111, 11, 'Dokulapadu', 5.60, 450, 'Laterite', 'Drip'),
+    -> (112, 12, 'Kanchili', 9.50, 850, 'Red Loamy', 'Drip'),
+    -> (113, 13, 'Bhogabeni', 7.80, 700, 'Laterite', 'Borewell'),
+    -> (114, 14, 'Yenduva', 6.70, 560, 'Red Sandy', 'Sprinkler'),
+    -> (115, 15, 'Baruva', 8.40, 730, 'Red Loamy', 'Drip'),
+    -> (116, 16, 'Korlam', 5.90, 480, 'Laterite', 'Canal'),
+    -> (117, 17, 'Mulapeta', 7.30, 640, 'Red Sandy', 'Borewell'),
+    -> (118, 18, 'Kaviti', 9.20, 820, 'Red Loamy', 'Drip'),
+    -> (119, 19, 'Bejjiputti', 6.80, 570, 'Laterite', 'Sprinkler'),
+    -> (120, 20, 'Ichchapuram', 8.60, 780, 'Red Sandy', 'Drip');
+Query OK, 20 rows affected (0.05 sec)
+Records: 20  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM FARMS;
++--------+----------+--------------+-----------+---------------+-----------+----------------+
+| FarmID | FarmerID | FarmLocation | TotalArea | NumberOfTrees | SoilType  | IrrigationType |
++--------+----------+--------------+-----------+---------------+-----------+----------------+
+|    101 |        1 | Boddapadu    |      6.50 |           520 | Red Sandy | Drip           |
+|    102 |        2 | Garudakhandi |      8.20 |           680 | Red Loamy | Sprinkler      |
+|    103 |        3 | Ganguvada    |      5.80 |           470 | Laterite  | Drip           |
+|    104 |        4 | Pedanchala   |      7.40 |           620 | Red Sandy | Canal          |
+|    105 |        5 | Rentikota    |      9.10 |           810 | Laterite  | Drip           |
+|    106 |        6 | Haripuram    |      6.90 |           590 | Red Loamy | Sprinkler      |
+|    107 |        7 | Mandasa      |      5.30 |           430 | Red Sandy | Borewell       |
+|    108 |        8 | Baligam      |      8.80 |           760 | Laterite  | Drip           |
+|    109 |        9 | Akkupalli    |      7.00 |           610 | Red Loamy | Canal          |
+|    110 |       10 | Bathupuram   |      6.10 |           510 | Red Sandy | Sprinkler      |
+|    111 |       11 | Dokulapadu   |      5.60 |           450 | Laterite  | Drip           |
+|    112 |       12 | Kanchili     |      9.50 |           850 | Red Loamy | Drip           |
+|    113 |       13 | Bhogabeni    |      7.80 |           700 | Laterite  | Borewell       |
+|    114 |       14 | Yenduva      |      6.70 |           560 | Red Sandy | Sprinkler      |
+|    115 |       15 | Baruva       |      8.40 |           730 | Red Loamy | Drip           |
+|    116 |       16 | Korlam       |      5.90 |           480 | Laterite  | Canal          |
+|    117 |       17 | Mulapeta     |      7.30 |           640 | Red Sandy | Borewell       |
+|    118 |       18 | Kaviti       |      9.20 |           820 | Red Loamy | Drip           |
+|    119 |       19 | Bejjiputti   |      6.80 |           570 | Laterite  | Sprinkler      |
+|    120 |       20 | Ichchapuram  |      8.60 |           780 | Red Sandy | Drip           |
++--------+----------+--------------+-----------+---------------+-----------+----------------+
+20 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Harvest (
+    ->     HarvestID INT PRIMARY KEY,
+    ->     FarmID INT,
+    ->     HarvestDate DATE,
+    ->     QuantityKg DECIMAL(8,2),
+    ->     Grade VARCHAR(20),
+    ->     Season VARCHAR(20),
+    ->     FOREIGN KEY (FarmID) REFERENCES Farms(FarmID)
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> INSERT INTO Harvest (HarvestID, FarmID, HarvestDate, QuantityKg, Grade, Season) VALUES
+    -> (201, 101, '2025-03-15', 2850.50, 'Grade A', 'Summer'),
+    -> (202, 102, '2025-03-18', 3520.75, 'Grade A', 'Summer'),
+    -> (203, 103, '2025-03-20', 2410.25, 'Grade B', 'Summer'),
+    -> (204, 104, '2025-03-25', 3185.00, 'Grade A', 'Summer'),
+    -> (205, 105, '2025-03-28', 4250.40, 'Grade A', 'Summer'),
+    -> (206, 106, '2025-04-02', 2965.60, 'Grade B', 'Summer'),
+    -> (207, 107, '2025-04-05', 2140.30, 'Grade C', 'Summer'),
+    -> (208, 108, '2025-04-08', 3895.20, 'Grade A', 'Summer'),
+    -> (209, 109, '2025-04-12', 3270.50, 'Grade A', 'Summer'),
+    -> (210, 110, '2025-04-15', 2785.80, 'Grade B', 'Summer'),
+    -> (211, 111, '2025-04-18', 2350.75, 'Grade C', 'Summer'),
+    -> (212, 112, '2025-04-22', 4485.90, 'Grade A', 'Summer'),
+    -> (213, 113, '2025-04-25', 3665.40, 'Grade A', 'Summer'),
+    -> (214, 114, '2025-04-28', 2895.20, 'Grade B', 'Summer'),
+    -> (215, 115, '2025-05-02', 3980.60, 'Grade A', 'Summer'),
+    -> (216, 116, '2025-05-06', 2540.45, 'Grade B', 'Summer'),
+    -> (217, 117, '2025-05-10', 3375.80, 'Grade A', 'Summer'),
+    -> (218, 118, '2025-05-14', 4325.70, 'Grade A', 'Summer'),
+    -> (219, 119, '2025-05-18', 3015.90, 'Grade B', 'Summer'),
+    -> (220, 120, '2025-05-22', 4105.35, 'Grade A', 'Summer');
+Query OK, 20 rows affected (0.02 sec)
+Records: 20  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM HARVEST;
++-----------+--------+-------------+------------+---------+--------+
+| HarvestID | FarmID | HarvestDate | QuantityKg | Grade   | Season |
++-----------+--------+-------------+------------+---------+--------+
+|       201 |    101 | 2025-03-15  |    2850.50 | Grade A | Summer |
+|       202 |    102 | 2025-03-18  |    3520.75 | Grade A | Summer |
+|       203 |    103 | 2025-03-20  |    2410.25 | Grade B | Summer |
+|       204 |    104 | 2025-03-25  |    3185.00 | Grade A | Summer |
+|       205 |    105 | 2025-03-28  |    4250.40 | Grade A | Summer |
+|       206 |    106 | 2025-04-02  |    2965.60 | Grade B | Summer |
+|       207 |    107 | 2025-04-05  |    2140.30 | Grade C | Summer |
+|       208 |    108 | 2025-04-08  |    3895.20 | Grade A | Summer |
+|       209 |    109 | 2025-04-12  |    3270.50 | Grade A | Summer |
+|       210 |    110 | 2025-04-15  |    2785.80 | Grade B | Summer |
+|       211 |    111 | 2025-04-18  |    2350.75 | Grade C | Summer |
+|       212 |    112 | 2025-04-22  |    4485.90 | Grade A | Summer |
+|       213 |    113 | 2025-04-25  |    3665.40 | Grade A | Summer |
+|       214 |    114 | 2025-04-28  |    2895.20 | Grade B | Summer |
+|       215 |    115 | 2025-05-02  |    3980.60 | Grade A | Summer |
+|       216 |    116 | 2025-05-06  |    2540.45 | Grade B | Summer |
+|       217 |    117 | 2025-05-10  |    3375.80 | Grade A | Summer |
+|       218 |    118 | 2025-05-14  |    4325.70 | Grade A | Summer |
+|       219 |    119 | 2025-05-18  |    3015.90 | Grade B | Summer |
+|       220 |    120 | 2025-05-22  |    4105.35 | Grade A | Summer |
++-----------+--------+-------------+------------+---------+--------+
+20 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Sales (
+    ->     SaleID INT PRIMARY KEY,
+    ->     HarvestID INT,
+    ->     BuyerName VARCHAR(100),
+    ->     QuantitySoldKg DECIMAL(8,2),
+    ->     PricePerKg DECIMAL(8,2),
+    ->     TotalAmount DECIMAL(10,2),
+    ->     SaleDate DATE,
+    ->     PaymentMode VARCHAR(20),
+    ->     FOREIGN KEY (HarvestID) REFERENCES Harvest(HarvestID)
+    -> );
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> INSERT INTO Sales (SaleID, HarvestID, BuyerName, QuantitySoldKg, PricePerKg, TotalAmount, SaleDate, PaymentMode) VALUES
+    -> (301, 201, 'Palasa Cashew Traders', 2800.00, 185.00, 518000.00, '2025-03-18', 'Bank Transfer'),
+    -> (302, 202, 'Uddanam Cashew Exports', 3500.00, 190.00, 665000.00, '2025-03-21', 'UPI'),
+    -> (303, 203, 'Sri Lakshmi Cashews', 2400.00, 175.00, 420000.00, '2025-03-24', 'Cash'),
+    -> (304, 204, 'Andhra Cashew Industries', 3150.00, 188.00, 592200.00, '2025-03-28', 'Bank Transfer'),
+    -> (305, 205, 'Palasa Cashew Market', 4200.00, 195.00, 819000.00, '2025-03-30', 'UPI'),
+    -> (306, 206, 'Sai Cashew Traders', 2950.00, 180.00, 531000.00, '2025-04-04', 'Cash'),
+    -> (307, 207, 'Coastal Nuts Pvt Ltd', 2100.00, 172.00, 361200.00, '2025-04-08', 'Bank Transfer'),
+    -> (308, 208, 'Green Agro Exports', 3850.00, 192.00, 739200.00, '2025-04-10', 'UPI'),
+    -> (309, 209, 'Palasa Cashew Traders', 3250.00, 186.00, 604500.00, '2025-04-15', 'Bank Transfer'),
+    -> (310, 210, 'Sri Lakshmi Cashews', 2750.00, 178.00, 489500.00, '2025-04-18', 'Cash'),
+    -> (311, 211, 'Andhra Cashew Industries', 2300.00, 170.00, 391000.00, '2025-04-20', 'UPI'),
+    -> (312, 212, 'Uddanam Cashew Exports', 4450.00, 198.00, 881100.00, '2025-04-24', 'Bank Transfer'),
+    -> (313, 213, 'Sai Cashew Traders', 3600.00, 189.00, 680400.00, '2025-04-28', 'UPI'),
+    -> (314, 214, 'Green Agro Exports', 2850.00, 182.00, 518700.00, '2025-05-01', 'Cash'),
+    -> (315, 215, 'Palasa Cashew Market', 3950.00, 194.00, 766300.00, '2025-05-05', 'Bank Transfer'),
+    -> (316, 216, 'Coastal Nuts Pvt Ltd', 2500.00, 176.00, 440000.00, '2025-05-08', 'UPI'),
+    -> (317, 217, 'Sri Lakshmi Cashews', 3350.00, 187.00, 626450.00, '2025-05-12', 'Cash'),
+    -> (318, 218, 'Uddanam Cashew Exports', 4300.00, 200.00, 860000.00, '2025-05-16', 'Bank Transfer'),
+    -> (319, 219, 'Sai Cashew Traders', 3000.00, 181.00, 543000.00, '2025-05-20', 'UPI'),
+    -> (320, 220, 'Palasa Cashew Traders', 4050.00, 196.00, 793800.00, '2025-05-24', 'Bank Transfer');
+Query OK, 20 rows affected (0.06 sec)
+Records: 20  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM SALES;
++--------+-----------+--------------------------+----------------+------------+-------------+------------+---------------+
+| SaleID | HarvestID | BuyerName                | QuantitySoldKg | PricePerKg | TotalAmount | SaleDate   | PaymentMode   |
++--------+-----------+--------------------------+----------------+------------+-------------+------------+---------------+
+|    301 |       201 | Palasa Cashew Traders    |        2800.00 |     185.00 |   518000.00 | 2025-03-18 | Bank Transfer |
+|    302 |       202 | Uddanam Cashew Exports   |        3500.00 |     190.00 |   665000.00 | 2025-03-21 | UPI           |
+|    303 |       203 | Sri Lakshmi Cashews      |        2400.00 |     175.00 |   420000.00 | 2025-03-24 | Cash          |
+|    304 |       204 | Andhra Cashew Industries |        3150.00 |     188.00 |   592200.00 | 2025-03-28 | Bank Transfer |
+|    305 |       205 | Palasa Cashew Market     |        4200.00 |     195.00 |   819000.00 | 2025-03-30 | UPI           |
+|    306 |       206 | Sai Cashew Traders       |        2950.00 |     180.00 |   531000.00 | 2025-04-04 | Cash          |
+|    307 |       207 | Coastal Nuts Pvt Ltd     |        2100.00 |     172.00 |   361200.00 | 2025-04-08 | Bank Transfer |
+|    308 |       208 | Green Agro Exports       |        3850.00 |     192.00 |   739200.00 | 2025-04-10 | UPI           |
+|    309 |       209 | Palasa Cashew Traders    |        3250.00 |     186.00 |   604500.00 | 2025-04-15 | Bank Transfer |
+|    310 |       210 | Sri Lakshmi Cashews      |        2750.00 |     178.00 |   489500.00 | 2025-04-18 | Cash          |
+|    311 |       211 | Andhra Cashew Industries |        2300.00 |     170.00 |   391000.00 | 2025-04-20 | UPI           |
+|    312 |       212 | Uddanam Cashew Exports   |        4450.00 |     198.00 |   881100.00 | 2025-04-24 | Bank Transfer |
+|    313 |       213 | Sai Cashew Traders       |        3600.00 |     189.00 |   680400.00 | 2025-04-28 | UPI           |
+|    314 |       214 | Green Agro Exports       |        2850.00 |     182.00 |   518700.00 | 2025-05-01 | Cash          |
+|    315 |       215 | Palasa Cashew Market     |        3950.00 |     194.00 |   766300.00 | 2025-05-05 | Bank Transfer |
+|    316 |       216 | Coastal Nuts Pvt Ltd     |        2500.00 |     176.00 |   440000.00 | 2025-05-08 | UPI           |
+|    317 |       217 | Sri Lakshmi Cashews      |        3350.00 |     187.00 |   626450.00 | 2025-05-12 | Cash          |
+|    318 |       218 | Uddanam Cashew Exports   |        4300.00 |     200.00 |   860000.00 | 2025-05-16 | Bank Transfer |
+|    319 |       219 | Sai Cashew Traders       |        3000.00 |     181.00 |   543000.00 | 2025-05-20 | UPI           |
+|    320 |       220 | Palasa Cashew Traders    |        4050.00 |     196.00 |   793800.00 | 2025-05-24 | Bank Transfer |
++--------+-----------+--------------------------+----------------+------------+-------------+------------+---------------+
+20 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Workers (
+    ->     WorkerID INT PRIMARY KEY,
+    ->     WorkerName VARCHAR(100),
+    ->     Gender VARCHAR(10),
+    ->     Age INT,
+    ->     Phone VARCHAR(15),
+    ->     Village VARCHAR(100),
+    ->     DailyWage DECIMAL(8,2),
+    ->     Skill VARCHAR(50)
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> INSERT INTO Workers (WorkerID, WorkerName, Gender, Age, Phone, Village, DailyWage, Skill) VALUES
+    -> (401, 'B. Ramu', 'Male', 35, '9123456701', 'Boddapadu', 650.00, 'Harvesting'),
+    -> (402, 'P. Suresh', 'Male', 42, '9123456702', 'Garudakhandi', 700.00, 'Pruning'),
+    -> (403, 'K. Lakshmi', 'Female', 31, '9123456703', 'Ganguvada', 600.00, 'Sorting'),
+    -> (404, 'M. Ravi', 'Male', 29, '9123456704', 'Pedanchala', 650.00, 'Irrigation'),
+    -> (405, 'D. Saraswathi', 'Female', 38, '9123456705', 'Rentikota', 620.00, 'Weeding'),
+    -> (406, 'G. Apparao', 'Male', 45, '9123456706', 'Haripuram', 750.00, 'Machine Operator'),
+    -> (407, 'T. Chandra', 'Male', 33, '9123456707', 'Mandasa', 680.00, 'Harvesting'),
+    -> (408, 'S. Padma', 'Female', 27, '9123456708', 'Baligam', 600.00, 'Packing'),
+    -> (409, 'Y. Krishna', 'Male', 36, '9123456709', 'Akkupalli', 700.00, 'Spraying'),
+    -> (410, 'A. Rajesh', 'Male', 30, '9123456710', 'Bathupuram', 650.00, 'Tree Maintenance'),
+    -> (411, 'R. Anitha', 'Female', 34, '9123456711', 'Dokulapadu', 620.00, 'Sorting'),
+    -> (412, 'N. Ganesh', 'Male', 40, '9123456712', 'Kanchili', 750.00, 'Machine Operator'),
+    -> (413, 'C. Bhaskar', 'Male', 37, '9123456713', 'Bhogabeni', 680.00, 'Harvesting'),
+    -> (414, 'L. Sunitha', 'Female', 29, '9123456714', 'Yenduva', 610.00, 'Packing'),
+    -> (415, 'V. Prasad', 'Male', 41, '9123456715', 'Baruva', 720.00, 'Irrigation'),
+    -> (416, 'J. Mallesh', 'Male', 32, '9123456716', 'Korlam', 650.00, 'Pruning'),
+    -> (417, 'B. Sridevi', 'Female', 28, '9123456717', 'Mulapeta', 600.00, 'Weeding'),
+    -> (418, 'K. Srinivas', 'Male', 39, '9123456718', 'Kaviti', 700.00, 'Harvesting'),
+    -> (419, 'P. Venkatesh', 'Male', 35, '9123456719', 'Bejjiputti', 680.00, 'Spraying'),
+    -> (420, 'M. Jyothi', 'Female', 26, '9123456720', 'Ichchapuram', 600.00, 'Packing');
+Query OK, 20 rows affected (0.06 sec)
+Records: 20  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM WORKERS;
++----------+---------------+--------+------+------------+--------------+-----------+------------------+
+| WorkerID | WorkerName    | Gender | Age  | Phone      | Village      | DailyWage | Skill            |
++----------+---------------+--------+------+------------+--------------+-----------+------------------+
+|      401 | B. Ramu       | Male   |   35 | 9123456701 | Boddapadu    |    650.00 | Harvesting       |
+|      402 | P. Suresh     | Male   |   42 | 9123456702 | Garudakhandi |    700.00 | Pruning          |
+|      403 | K. Lakshmi    | Female |   31 | 9123456703 | Ganguvada    |    600.00 | Sorting          |
+|      404 | M. Ravi       | Male   |   29 | 9123456704 | Pedanchala   |    650.00 | Irrigation       |
+|      405 | D. Saraswathi | Female |   38 | 9123456705 | Rentikota    |    620.00 | Weeding          |
+|      406 | G. Apparao    | Male   |   45 | 9123456706 | Haripuram    |    750.00 | Machine Operator |
+|      407 | T. Chandra    | Male   |   33 | 9123456707 | Mandasa      |    680.00 | Harvesting       |
+|      408 | S. Padma      | Female |   27 | 9123456708 | Baligam      |    600.00 | Packing          |
+|      409 | Y. Krishna    | Male   |   36 | 9123456709 | Akkupalli    |    700.00 | Spraying         |
+|      410 | A. Rajesh     | Male   |   30 | 9123456710 | Bathupuram   |    650.00 | Tree Maintenance |
+|      411 | R. Anitha     | Female |   34 | 9123456711 | Dokulapadu   |    620.00 | Sorting          |
+|      412 | N. Ganesh     | Male   |   40 | 9123456712 | Kanchili     |    750.00 | Machine Operator |
+|      413 | C. Bhaskar    | Male   |   37 | 9123456713 | Bhogabeni    |    680.00 | Harvesting       |
+|      414 | L. Sunitha    | Female |   29 | 9123456714 | Yenduva      |    610.00 | Packing          |
+|      415 | V. Prasad     | Male   |   41 | 9123456715 | Baruva       |    720.00 | Irrigation       |
+|      416 | J. Mallesh    | Male   |   32 | 9123456716 | Korlam       |    650.00 | Pruning          |
+|      417 | B. Sridevi    | Female |   28 | 9123456717 | Mulapeta     |    600.00 | Weeding          |
+|      418 | K. Srinivas   | Male   |   39 | 9123456718 | Kaviti       |    700.00 | Harvesting       |
+|      419 | P. Venkatesh  | Male   |   35 | 9123456719 | Bejjiputti   |    680.00 | Spraying         |
+|      420 | M. Jyothi     | Female |   26 | 9123456720 | Ichchapuram  |    600.00 | Packing          |
++----------+---------------+--------+------+------------+--------------+-----------+------------------+
+20 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Fertilizers (
+    ->     FertilizerID INT PRIMARY KEY,
+    ->     FarmID INT,
+    ->     FertilizerName VARCHAR(100),
+    ->     QuantityKg DECIMAL(8,2),
+    ->     ApplicationDate DATE,
+    ->     Cost DECIMAL(10,2),
+    ->     Supplier VARCHAR(100),
+    ->     FOREIGN KEY (FarmID) REFERENCES Farms(FarmID)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO Fertilizers (FertilizerID, FarmID, FertilizerName, QuantityKg, ApplicationDate, Cost, Supplier) VALUES
+    -> (501, 101, 'Urea', 150.00, '2025-01-10', 4200.00, 'Sri Lakshmi Agro Agencies'),
+    -> (502, 102, 'DAP', 180.00, '2025-01-12', 8100.00, 'Palasa Fertilizers'),
+    -> (503, 103, 'NPK 20:20:20', 140.00, '2025-01-15', 7000.00, 'Green Agro Centre'),
+    -> (504, 104, 'Organic Compost', 500.00, '2025-01-18', 6000.00, 'Nature Organics'),
+    -> (505, 105, 'Potash', 120.00, '2025-01-20', 5400.00, 'Sri Lakshmi Agro Agencies'),
+    -> (506, 106, 'Urea', 160.00, '2025-01-22', 4480.00, 'Palasa Fertilizers'),
+    -> (507, 107, 'DAP', 170.00, '2025-01-25', 7650.00, 'Green Agro Centre'),
+    -> (508, 108, 'Vermicompost', 450.00, '2025-01-28', 6750.00, 'Nature Organics'),
+    -> (509, 109, 'NPK 19:19:19', 150.00, '2025-02-01', 7500.00, 'Palasa Fertilizers'),
+    -> (510, 110, 'Potash', 130.00, '2025-02-03', 5850.00, 'Sri Lakshmi Agro Agencies'),
+    -> (511, 111, 'Organic Compost', 550.00, '2025-02-05', 6600.00, 'Nature Organics'),
+    -> (512, 112, 'DAP', 200.00, '2025-02-08', 9000.00, 'Green Agro Centre'),
+    -> (513, 113, 'Urea', 170.00, '2025-02-10', 4760.00, 'Palasa Fertilizers'),
+    -> (514, 114, 'NPK 20:20:20', 160.00, '2025-02-12', 8000.00, 'Sri Lakshmi Agro Agencies'),
+    -> (515, 115, 'Vermicompost', 480.00, '2025-02-15', 7200.00, 'Nature Organics'),
+    -> (516, 116, 'Potash', 125.00, '2025-02-18', 5625.00, 'Green Agro Centre'),
+    -> (517, 117, 'DAP', 175.00, '2025-02-20', 7875.00, 'Palasa Fertilizers'),
+    -> (518, 118, 'Urea', 180.00, '2025-02-22', 5040.00, 'Sri Lakshmi Agro Agencies'),
+    -> (519, 119, 'Organic Compost', 520.00, '2025-02-25', 6240.00, 'Nature Organics'),
+    -> (520, 120, 'NPK 19:19:19', 155.00, '2025-02-28', 7750.00, 'Green Agro Centre');
+Query OK, 20 rows affected (0.04 sec)
+Records: 20  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM FERTILIZERS;
++--------------+--------+-----------------+------------+-----------------+---------+---------------------------+
+| FertilizerID | FarmID | FertilizerName  | QuantityKg | ApplicationDate | Cost    | Supplier                  |
++--------------+--------+-----------------+------------+-----------------+---------+---------------------------+
+|          501 |    101 | Urea            |     150.00 | 2025-01-10      | 4200.00 | Sri Lakshmi Agro Agencies |
+|          502 |    102 | DAP             |     180.00 | 2025-01-12      | 8100.00 | Palasa Fertilizers        |
+|          503 |    103 | NPK 20:20:20    |     140.00 | 2025-01-15      | 7000.00 | Green Agro Centre         |
+|          504 |    104 | Organic Compost |     500.00 | 2025-01-18      | 6000.00 | Nature Organics           |
+|          505 |    105 | Potash          |     120.00 | 2025-01-20      | 5400.00 | Sri Lakshmi Agro Agencies |
+|          506 |    106 | Urea            |     160.00 | 2025-01-22      | 4480.00 | Palasa Fertilizers        |
+|          507 |    107 | DAP             |     170.00 | 2025-01-25      | 7650.00 | Green Agro Centre         |
+|          508 |    108 | Vermicompost    |     450.00 | 2025-01-28      | 6750.00 | Nature Organics           |
+|          509 |    109 | NPK 19:19:19    |     150.00 | 2025-02-01      | 7500.00 | Palasa Fertilizers        |
+|          510 |    110 | Potash          |     130.00 | 2025-02-03      | 5850.00 | Sri Lakshmi Agro Agencies |
+|          511 |    111 | Organic Compost |     550.00 | 2025-02-05      | 6600.00 | Nature Organics           |
+|          512 |    112 | DAP             |     200.00 | 2025-02-08      | 9000.00 | Green Agro Centre         |
+|          513 |    113 | Urea            |     170.00 | 2025-02-10      | 4760.00 | Palasa Fertilizers        |
+|          514 |    114 | NPK 20:20:20    |     160.00 | 2025-02-12      | 8000.00 | Sri Lakshmi Agro Agencies |
+|          515 |    115 | Vermicompost    |     480.00 | 2025-02-15      | 7200.00 | Nature Organics           |
+|          516 |    116 | Potash          |     125.00 | 2025-02-18      | 5625.00 | Green Agro Centre         |
+|          517 |    117 | DAP             |     175.00 | 2025-02-20      | 7875.00 | Palasa Fertilizers        |
+|          518 |    118 | Urea            |     180.00 | 2025-02-22      | 5040.00 | Sri Lakshmi Agro Agencies |
+|          519 |    119 | Organic Compost |     520.00 | 2025-02-25      | 6240.00 | Nature Organics           |
+|          520 |    120 | NPK 19:19:19    |     155.00 | 2025-02-28      | 7750.00 | Green Agro Centre         |
++--------------+--------+-----------------+------------+-----------------+---------+---------------------------+
+20 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Expenses (
+    ->     ExpenseID INT PRIMARY KEY,
+    ->     FarmID INT,
+    ->     ExpenseType VARCHAR(50),
+    ->     Amount DECIMAL(10,2),
+    ->     ExpenseDate DATE,
+    ->     Description VARCHAR(200),
+    ->     FOREIGN KEY (FarmID) REFERENCES Farms(FarmID)
+    -> );
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> INSERT INTO Expenses (ExpenseID, FarmID, ExpenseType, Amount, ExpenseDate, Description) VALUES
+    -> (601, 101, 'Fertilizer', 4200.00, '2025-01-10', 'Purchased Urea fertilizer'),
+    -> (602, 102, 'Labor', 12500.00, '2025-01-15', 'Harvesting labor wages'),
+    -> (603, 103, 'Pesticides', 3800.00, '2025-01-20', 'Purchased insecticides'),
+    -> (604, 104, 'Irrigation', 5200.00, '2025-01-25', 'Borewell electricity charges'),
+    -> (605, 105, 'Equipment', 18500.00, '2025-02-01', 'Purchased pruning tools'),
+    -> (606, 106, 'Transportation', 6400.00, '2025-02-05', 'Transport to Palasa market'),
+    -> (607, 107, 'Labor', 9800.00, '2025-02-08', 'Farm maintenance wages'),
+    -> (608, 108, 'Fertilizer', 6750.00, '2025-02-12', 'Purchased Vermicompost'),
+    -> (609, 109, 'Pesticides', 4200.00, '2025-02-15', 'Spraying chemicals'),
+    -> (610, 110, 'Equipment', 12000.00, '2025-02-18', 'Water pump repair'),
+    -> (611, 111, 'Labor', 11500.00, '2025-02-22', 'Tree pruning wages'),
+    -> (612, 112, 'Irrigation', 6800.00, '2025-02-25', 'Drip irrigation maintenance'),
+    -> (613, 113, 'Transportation', 5900.00, '2025-03-01', 'Cashew transport charges'),
+    -> (614, 114, 'Fertilizer', 8000.00, '2025-03-05', 'Purchased NPK fertilizer'),
+    -> (615, 115, 'Equipment', 22000.00, '2025-03-08', 'Purchased power sprayer'),
+    -> (616, 116, 'Labor', 10800.00, '2025-03-12', 'Harvest labor wages'),
+    -> (617, 117, 'Pesticides', 4600.00, '2025-03-15', 'Fungicide purchase'),
+    -> (618, 118, 'Irrigation', 7200.00, '2025-03-18', 'Motor maintenance'),
+    -> (619, 119, 'Transportation', 6100.00, '2025-03-22', 'Vehicle rental charges'),
+    -> (620, 120, 'Equipment', 19500.00, '2025-03-25', 'Purchased cashew drying trays');
+Query OK, 20 rows affected (0.01 sec)
+Records: 20  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM EXPENSES;
++-----------+--------+----------------+----------+-------------+-------------------------------+
+| ExpenseID | FarmID | ExpenseType    | Amount   | ExpenseDate | Description                   |
++-----------+--------+----------------+----------+-------------+-------------------------------+
+|       601 |    101 | Fertilizer     |  4200.00 | 2025-01-10  | Purchased Urea fertilizer     |
+|       602 |    102 | Labor          | 12500.00 | 2025-01-15  | Harvesting labor wages        |
+|       603 |    103 | Pesticides     |  3800.00 | 2025-01-20  | Purchased insecticides        |
+|       604 |    104 | Irrigation     |  5200.00 | 2025-01-25  | Borewell electricity charges  |
+|       605 |    105 | Equipment      | 18500.00 | 2025-02-01  | Purchased pruning tools       |
+|       606 |    106 | Transportation |  6400.00 | 2025-02-05  | Transport to Palasa market    |
+|       607 |    107 | Labor          |  9800.00 | 2025-02-08  | Farm maintenance wages        |
+|       608 |    108 | Fertilizer     |  6750.00 | 2025-02-12  | Purchased Vermicompost        |
+|       609 |    109 | Pesticides     |  4200.00 | 2025-02-15  | Spraying chemicals            |
+|       610 |    110 | Equipment      | 12000.00 | 2025-02-18  | Water pump repair             |
+|       611 |    111 | Labor          | 11500.00 | 2025-02-22  | Tree pruning wages            |
+|       612 |    112 | Irrigation     |  6800.00 | 2025-02-25  | Drip irrigation maintenance   |
+|       613 |    113 | Transportation |  5900.00 | 2025-03-01  | Cashew transport charges      |
+|       614 |    114 | Fertilizer     |  8000.00 | 2025-03-05  | Purchased NPK fertilizer      |
+|       615 |    115 | Equipment      | 22000.00 | 2025-03-08  | Purchased power sprayer       |
+|       616 |    116 | Labor          | 10800.00 | 2025-03-12  | Harvest labor wages           |
+|       617 |    117 | Pesticides     |  4600.00 | 2025-03-15  | Fungicide purchase            |
+|       618 |    118 | Irrigation     |  7200.00 | 2025-03-18  | Motor maintenance             |
+|       619 |    119 | Transportation |  6100.00 | 2025-03-22  | Vehicle rental charges        |
+|       620 |    120 | Equipment      | 19500.00 | 2025-03-25  | Purchased cashew drying trays |
++-----------+--------+----------------+----------+-------------+-------------------------------+
+20 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Equipment (
+    ->     EquipmentID INT PRIMARY KEY,
+    ->     FarmID INT,
+    ->     EquipmentName VARCHAR(100),
+    ->     Brand VARCHAR(100),
+    ->     PurchaseDate DATE,
+    ->     Quantity INT,
+    ->     Cost DECIMAL(10,2),
+    ->     Status VARCHAR(20),
+    ->     FOREIGN KEY (FarmID) REFERENCES Farms(FarmID)
+    -> );
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> INSERT INTO Equipment (EquipmentID, FarmID, EquipmentName, Brand, PurchaseDate, Quantity, Cost, Status) VALUES
+    -> (701, 101, 'Power Sprayer', 'Mahindra', '2024-06-15', 1, 18500.00, 'Working'),
+    -> (702, 102, 'Pruning Shears', 'Falcon', '2024-07-10', 4, 3200.00, 'Working'),
+    -> (703, 103, 'Water Pump', 'Kirloskar', '2024-05-20', 1, 24500.00, 'Working'),
+    -> (704, 104, 'Ladder', 'Supreme', '2024-08-05', 2, 6000.00, 'Working'),
+    -> (705, 105, 'Cashew Nut Dryer', 'AgroTech', '2024-09-12', 1, 42000.00, 'Working'),
+    -> (706, 106, 'Tractor', 'Swaraj', '2023-11-18', 1, 650000.00, 'Working'),
+    -> (707, 107, 'Power Tiller', 'VST', '2024-04-22', 1, 95000.00, 'Working'),
+    -> (708, 108, 'Wheelbarrow', 'AgriPro', '2024-10-01', 2, 7000.00, 'Working'),
+    -> (709, 109, 'Water Tank', 'Sintex', '2024-03-28', 1, 18000.00, 'Working'),
+    -> (710, 110, 'Brush Cutter', 'Honda', '2024-07-25', 1, 22000.00, 'Under Repair'),
+    -> (711, 111, 'Power Sprayer', 'KisanKraft', '2024-06-30', 1, 17000.00, 'Working'),
+    -> (712, 112, 'Mini Tractor', 'Mahindra', '2023-12-15', 1, 520000.00, 'Working'),
+    -> (713, 113, 'Pruning Saw', 'Falcon', '2024-08-18', 3, 4500.00, 'Working'),
+    -> (714, 114, 'Drip Irrigation Kit', 'Jain Irrigation', '2024-02-14', 1, 36000.00, 'Working'),
+    -> (715, 115, 'Harvest Collection Baskets', 'AgriPro', '2024-05-08', 20, 10000.00, 'Working'),
+    -> (716, 116, 'Tarpaulin Sheets', 'Supreme', '2024-09-20', 5, 7500.00, 'Working'),
+    -> (717, 117, 'Moisture Meter', 'AgriSense', '2024-10-12', 1, 12500.00, 'Working'),
+    -> (718, 118, 'Cashew Grading Machine', 'AgroTech', '2024-01-30', 1, 95000.00, 'Working'),
+    -> (719, 119, 'Hand Sprayer', 'KisanKraft', '2024-11-05', 3, 5400.00, 'Working'),
+    -> (720, 120, 'Generator', 'Honda', '2023-10-22', 1, 58000.00, 'Maintenance');
+Query OK, 20 rows affected (0.05 sec)
+Records: 20  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM EQUIPMENT;
++-------------+--------+----------------------------+-----------------+--------------+----------+-----------+--------------+
+| EquipmentID | FarmID | EquipmentName              | Brand           | PurchaseDate | Quantity | Cost      | Status       |
++-------------+--------+----------------------------+-----------------+--------------+----------+-----------+--------------+
+|         701 |    101 | Power Sprayer              | Mahindra        | 2024-06-15   |        1 |  18500.00 | Working      |
+|         702 |    102 | Pruning Shears             | Falcon          | 2024-07-10   |        4 |   3200.00 | Working      |
+|         703 |    103 | Water Pump                 | Kirloskar       | 2024-05-20   |        1 |  24500.00 | Working      |
+|         704 |    104 | Ladder                     | Supreme         | 2024-08-05   |        2 |   6000.00 | Working      |
+|         705 |    105 | Cashew Nut Dryer           | AgroTech        | 2024-09-12   |        1 |  42000.00 | Working      |
+|         706 |    106 | Tractor                    | Swaraj          | 2023-11-18   |        1 | 650000.00 | Working      |
+|         707 |    107 | Power Tiller               | VST             | 2024-04-22   |        1 |  95000.00 | Working      |
+|         708 |    108 | Wheelbarrow                | AgriPro         | 2024-10-01   |        2 |   7000.00 | Working      |
+|         709 |    109 | Water Tank                 | Sintex          | 2024-03-28   |        1 |  18000.00 | Working      |
+|         710 |    110 | Brush Cutter               | Honda           | 2024-07-25   |        1 |  22000.00 | Under Repair |
+|         711 |    111 | Power Sprayer              | KisanKraft      | 2024-06-30   |        1 |  17000.00 | Working      |
+|         712 |    112 | Mini Tractor               | Mahindra        | 2023-12-15   |        1 | 520000.00 | Working      |
+|         713 |    113 | Pruning Saw                | Falcon          | 2024-08-18   |        3 |   4500.00 | Working      |
+|         714 |    114 | Drip Irrigation Kit        | Jain Irrigation | 2024-02-14   |        1 |  36000.00 | Working      |
+|         715 |    115 | Harvest Collection Baskets | AgriPro         | 2024-05-08   |       20 |  10000.00 | Working      |
+|         716 |    116 | Tarpaulin Sheets           | Supreme         | 2024-09-20   |        5 |   7500.00 | Working      |
+|         717 |    117 | Moisture Meter             | AgriSense       | 2024-10-12   |        1 |  12500.00 | Working      |
+|         718 |    118 | Cashew Grading Machine     | AgroTech        | 2024-01-30   |        1 |  95000.00 | Working      |
+|         719 |    119 | Hand Sprayer               | KisanKraft      | 2024-11-05   |        3 |   5400.00 | Working      |
+|         720 |    120 | Generator                  | Honda           | 2023-10-22   |        1 |  58000.00 | Maintenance  |
++-------------+--------+----------------------------+-----------------+--------------+----------+-----------+--------------+
+20 rows in set (0.00 sec)
+
+mysql> CREATE TABLE GovernmentSubsidies (
+    ->     SubsidyID INT PRIMARY KEY,
+    ->     FarmerID INT,
+    ->     SchemeName VARCHAR(100),
+    ->     Amount DECIMAL(10,2),
+    ->     SanctionDate DATE,
+    ->     Status VARCHAR(20),
+    ->     FOREIGN KEY (FarmerID) REFERENCES Farmers(FarmerID)
+    -> );
+Query OK, 0 rows affected (0.12 sec)
+
+mysql> INSERT INTO GovernmentSubsidies (SubsidyID, FarmerID, SchemeName, Amount, SanctionDate, Status) VALUES
+    -> (801, 1, 'PM-KISAN', 6000.00, '2025-01-05', 'Credited'),
+    -> (802, 2, 'YSR Rythu Bharosa', 13500.00, '2025-01-08', 'Credited'),
+    -> (803, 3, 'PM Fasal Bima Yojana', 8500.00, '2025-01-12', 'Approved'),
+    -> (804, 4, 'Micro Irrigation Scheme', 25000.00, '2025-01-15', 'Credited'),
+    -> (805, 5, 'National Horticulture Mission', 40000.00, '2025-01-20', 'Credited'),
+    -> (806, 6, 'PM-KISAN', 6000.00, '2025-01-22', 'Credited'),
+    -> (807, 7, 'YSR Rythu Bharosa', 13500.00, '2025-01-25', 'Approved'),
+    -> (808, 8, 'Drip Irrigation Subsidy', 30000.00, '2025-01-28', 'Credited'),
+    -> (809, 9, 'Farm Mechanization Scheme', 50000.00, '2025-02-02', 'Pending'),
+    -> (810, 10, 'PM-KISAN', 6000.00, '2025-02-05', 'Credited'),
+    -> (811, 11, 'National Horticulture Mission', 45000.00, '2025-02-08', 'Approved'),
+    -> (812, 12, 'YSR Rythu Bharosa', 13500.00, '2025-02-12', 'Credited'),
+    -> (813, 13, 'Cashew Plantation Development Scheme', 35000.00, '2025-02-15', 'Credited'),
+    -> (814, 14, 'PM Fasal Bima Yojana', 9000.00, '2025-02-18', 'Approved'),
+    -> (815, 15, 'Farm Mechanization Scheme', 55000.00, '2025-02-22', 'Credited'),
+    -> (816, 16, 'PM-KISAN', 6000.00, '2025-02-25', 'Credited'),
+    -> (817, 17, 'Micro Irrigation Scheme', 28000.00, '2025-03-01', 'Pending'),
+    -> (818, 18, 'National Horticulture Mission', 42000.00, '2025-03-05', 'Credited'),
+    -> (819, 19, 'Cashew Plantation Development Scheme', 38000.00, '2025-03-10', 'Approved'),
+    -> (820, 20, 'YSR Rythu Bharosa', 13500.00, '2025-03-15', 'Credited');
+Query OK, 20 rows affected (0.05 sec)
+Records: 20  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM GovernmentSubsidies;
++-----------+----------+--------------------------------------+----------+--------------+----------+
+| SubsidyID | FarmerID | SchemeName                           | Amount   | SanctionDate | Status   |
++-----------+----------+--------------------------------------+----------+--------------+----------+
+|       801 |        1 | PM-KISAN                             |  6000.00 | 2025-01-05   | Credited |
+|       802 |        2 | YSR Rythu Bharosa                    | 13500.00 | 2025-01-08   | Credited |
+|       803 |        3 | PM Fasal Bima Yojana                 |  8500.00 | 2025-01-12   | Approved |
+|       804 |        4 | Micro Irrigation Scheme              | 25000.00 | 2025-01-15   | Credited |
+|       805 |        5 | National Horticulture Mission        | 40000.00 | 2025-01-20   | Credited |
+|       806 |        6 | PM-KISAN                             |  6000.00 | 2025-01-22   | Credited |
+|       807 |        7 | YSR Rythu Bharosa                    | 13500.00 | 2025-01-25   | Approved |
+|       808 |        8 | Drip Irrigation Subsidy              | 30000.00 | 2025-01-28   | Credited |
+|       809 |        9 | Farm Mechanization Scheme            | 50000.00 | 2025-02-02   | Pending  |
+|       810 |       10 | PM-KISAN                             |  6000.00 | 2025-02-05   | Credited |
+|       811 |       11 | National Horticulture Mission        | 45000.00 | 2025-02-08   | Approved |
+|       812 |       12 | YSR Rythu Bharosa                    | 13500.00 | 2025-02-12   | Credited |
+|       813 |       13 | Cashew Plantation Development Scheme | 35000.00 | 2025-02-15   | Credited |
+|       814 |       14 | PM Fasal Bima Yojana                 |  9000.00 | 2025-02-18   | Approved |
+|       815 |       15 | Farm Mechanization Scheme            | 55000.00 | 2025-02-22   | Credited |
+|       816 |       16 | PM-KISAN                             |  6000.00 | 2025-02-25   | Credited |
+|       817 |       17 | Micro Irrigation Scheme              | 28000.00 | 2025-03-01   | Pending  |
+|       818 |       18 | National Horticulture Mission        | 42000.00 | 2025-03-05   | Credited |
+|       819 |       19 | Cashew Plantation Development Scheme | 38000.00 | 2025-03-10   | Approved |
+|       820 |       20 | YSR Rythu Bharosa                    | 13500.00 | 2025-03-15   | Credited |
++-----------+----------+--------------------------------------+----------+--------------+----------+
+20 rows in set (0.00 sec)
+
+
+mysql> CREATE TABLE Irrigation (
+    ->     IrrigationID INT PRIMARY KEY,
+    ->     FarmID INT,
+    ->     IrrigationMethod VARCHAR(50),
+    ->     WaterSource VARCHAR(50),
+    ->     IrrigationDate DATE,
+    ->     WaterUsedLiters INT,
+    ->     FOREIGN KEY (FarmID) REFERENCES Farms(FarmID)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO Irrigation (IrrigationID, FarmID, IrrigationMethod, WaterSource, IrrigationDate, WaterUsedLiters) VALUES
+    -> (901,101,'Drip','Borewell','2025-01-05',4500),
+    -> (902,102,'Sprinkler','Canal','2025-01-07',5200),
+    -> (903,103,'Drip','Borewell','2025-01-09',4100),
+    -> (904,104,'Canal','Canal','2025-01-11',6800),
+    -> (905,105,'Drip','Borewell','2025-01-13',6000),
+    -> (906,106,'Sprinkler','Farm Pond','2025-01-15',5000),
+    -> (907,107,'Borewell','Borewell','2025-01-17',4700),
+    -> (908,108,'Drip','Borewell','2025-01-19',6200),
+    -> (909,109,'Canal','Canal','2025-01-21',6500),
+    -> (910,110,'Sprinkler','Borewell','2025-01-23',5100),
+    -> (911,111,'Drip','Farm Pond','2025-01-25',4300),
+    -> (912,112,'Drip','Borewell','2025-01-27',7000),
+    -> (913,113,'Borewell','Borewell','2025-01-29',5600),
+    -> (914,114,'Sprinkler','Canal','2025-02-01',5200),
+    -> (915,115,'Drip','Farm Pond','2025-02-03',6400),
+    -> (916,116,'Canal','Canal','2025-02-05',6100),
+    -> (917,117,'Borewell','Borewell','2025-02-07',5400),
+    -> (918,118,'Drip','Borewell','2025-02-09',7200),
+    -> (919,119,'Sprinkler','Farm Pond','2025-02-11',5000),
+    -> (920,120,'Drip','Borewell','2025-02-13',6900);
+Query OK, 20 rows affected (0.01 sec)
+Records: 20  Duplicates: 0  Warnings: 0
+
+mysql> CREATE TABLE PestControl (
+    ->     PestControlID INT PRIMARY KEY,
+    ->     FarmID INT,
+    ->     PestName VARCHAR(100),
+    ->     PesticideUsed VARCHAR(100),
+    ->     SprayDate DATE,
+    ->     Cost DECIMAL(10,2),
+    ->     FOREIGN KEY (FarmID) REFERENCES Farms(FarmID)
+    -> );
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> INSERT INTO PestControl (PestControlID, FarmID, PestName, PesticideUsed, SprayDate, Cost) VALUES
+    -> (1001,101,'Tea Mosquito Bug','Imidacloprid','2025-02-02',2500.00),
+    -> (1002,102,'Stem Borer','Chlorpyrifos','2025-02-04',3200.00),
+    -> (1003,103,'Leaf Miner','Neem Oil','2025-02-06',1800.00),
+    -> (1004,104,'Aphids','Thiamethoxam','2025-02-08',2700.00),
+    -> (1005,105,'Fruit Borer','Lambda Cyhalothrin','2025-02-10',3500.00),
+    -> (1006,106,'Tea Mosquito Bug','Imidacloprid','2025-02-12',2600.00),
+    -> (1007,107,'Stem Borer','Chlorpyrifos','2025-02-14',3100.00),
+    -> (1008,108,'Leaf Miner','Neem Oil','2025-02-16',1900.00),
+    -> (1009,109,'Fruit Borer','Lambda Cyhalothrin','2025-02-18',3400.00),
+    -> (1010,110,'Aphids','Thiamethoxam','2025-02-20',2800.00),
+    -> (1011,111,'Tea Mosquito Bug','Imidacloprid','2025-02-22',2500.00),
+    -> (1012,112,'Stem Borer','Chlorpyrifos','2025-02-24',3300.00),
+    -> (1013,113,'Leaf Miner','Neem Oil','2025-02-26',2000.00),
+    -> (1014,114,'Fruit Borer','Lambda Cyhalothrin','2025-02-28',3600.00),
+    -> (1015,115,'Aphids','Thiamethoxam','2025-03-02',2900.00),
+    -> (1016,116,'Tea Mosquito Bug','Imidacloprid','2025-03-04',2550.00),
+    -> (1017,117,'Stem Borer','Chlorpyrifos','2025-03-06',3150.00),
+    -> (1018,118,'Fruit Borer','Lambda Cyhalothrin','2025-03-08',3700.00),
+    -> (1019,119,'Leaf Miner','Neem Oil','2025-03-10',2100.00),
+    -> (1020,120,'Tea Mosquito Bug','Imidacloprid','2025-03-12',2650.00);
+Query OK, 20 rows affected (0.05 sec)
+Records: 20  Duplicates: 0  Warnings: 0
+
+mysql> SLECT * FROM PESTCONTROL;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SLECT * FROM PESTCONTROL' at line 1
+mysql> SELECT * FROM PESTCONTROL;
++---------------+--------+------------------+--------------------+------------+---------+
+| PestControlID | FarmID | PestName         | PesticideUsed      | SprayDate  | Cost    |
++---------------+--------+------------------+--------------------+------------+---------+
+|          1001 |    101 | Tea Mosquito Bug | Imidacloprid       | 2025-02-02 | 2500.00 |
+|          1002 |    102 | Stem Borer       | Chlorpyrifos       | 2025-02-04 | 3200.00 |
+|          1003 |    103 | Leaf Miner       | Neem Oil           | 2025-02-06 | 1800.00 |
+|          1004 |    104 | Aphids           | Thiamethoxam       | 2025-02-08 | 2700.00 |
+|          1005 |    105 | Fruit Borer      | Lambda Cyhalothrin | 2025-02-10 | 3500.00 |
+|          1006 |    106 | Tea Mosquito Bug | Imidacloprid       | 2025-02-12 | 2600.00 |
+|          1007 |    107 | Stem Borer       | Chlorpyrifos       | 2025-02-14 | 3100.00 |
+|          1008 |    108 | Leaf Miner       | Neem Oil           | 2025-02-16 | 1900.00 |
+|          1009 |    109 | Fruit Borer      | Lambda Cyhalothrin | 2025-02-18 | 3400.00 |
+|          1010 |    110 | Aphids           | Thiamethoxam       | 2025-02-20 | 2800.00 |
+|          1011 |    111 | Tea Mosquito Bug | Imidacloprid       | 2025-02-22 | 2500.00 |
+|          1012 |    112 | Stem Borer       | Chlorpyrifos       | 2025-02-24 | 3300.00 |
+|          1013 |    113 | Leaf Miner       | Neem Oil           | 2025-02-26 | 2000.00 |
+|          1014 |    114 | Fruit Borer      | Lambda Cyhalothrin | 2025-02-28 | 3600.00 |
+|          1015 |    115 | Aphids           | Thiamethoxam       | 2025-03-02 | 2900.00 |
+|          1016 |    116 | Tea Mosquito Bug | Imidacloprid       | 2025-03-04 | 2550.00 |
+|          1017 |    117 | Stem Borer       | Chlorpyrifos       | 2025-03-06 | 3150.00 |
+|          1018 |    118 | Fruit Borer      | Lambda Cyhalothrin | 2025-03-08 | 3700.00 |
+|          1019 |    119 | Leaf Miner       | Neem Oil           | 2025-03-10 | 2100.00 |
+|          1020 |    120 | Tea Mosquito Bug | Imidacloprid       | 2025-03-12 | 2650.00 |
++---------------+--------+------------------+--------------------+------------+---------+
+20 rows in set (0.00 sec)
+
+mysql> SELECT * FROM IRRIGATION;
++--------------+--------+------------------+-------------+----------------+-----------------+
+| IrrigationID | FarmID | IrrigationMethod | WaterSource | IrrigationDate | WaterUsedLiters |
++--------------+--------+------------------+-------------+----------------+-----------------+
+|          901 |    101 | Drip             | Borewell    | 2025-01-05     |            4500 |
+|          902 |    102 | Sprinkler        | Canal       | 2025-01-07     |            5200 |
+|          903 |    103 | Drip             | Borewell    | 2025-01-09     |            4100 |
+|          904 |    104 | Canal            | Canal       | 2025-01-11     |            6800 |
+|          905 |    105 | Drip             | Borewell    | 2025-01-13     |            6000 |
+|          906 |    106 | Sprinkler        | Farm Pond   | 2025-01-15     |            5000 |
+|          907 |    107 | Borewell         | Borewell    | 2025-01-17     |            4700 |
+|          908 |    108 | Drip             | Borewell    | 2025-01-19     |            6200 |
+|          909 |    109 | Canal            | Canal       | 2025-01-21     |            6500 |
+|          910 |    110 | Sprinkler        | Borewell    | 2025-01-23     |            5100 |
+|          911 |    111 | Drip             | Farm Pond   | 2025-01-25     |            4300 |
+|          912 |    112 | Drip             | Borewell    | 2025-01-27     |            7000 |
+|          913 |    113 | Borewell         | Borewell    | 2025-01-29     |            5600 |
+|          914 |    114 | Sprinkler        | Canal       | 2025-02-01     |            5200 |
+|          915 |    115 | Drip             | Farm Pond   | 2025-02-03     |            6400 |
+|          916 |    116 | Canal            | Canal       | 2025-02-05     |            6100 |
+|          917 |    117 | Borewell         | Borewell    | 2025-02-07     |            5400 |
+|          918 |    118 | Drip             | Borewell    | 2025-02-09     |            7200 |
+|          919 |    119 | Sprinkler        | Farm Pond   | 2025-02-11     |            5000 |
+|          920 |    120 | Drip             | Borewell    | 2025-02-13     |            6900 |
++--------------+--------+------------------+-------------+----------------+-----------------+
+20 rows in set (0.00 sec)
+
+mysql> SHOW TABLES;
++---------------------+
+| Tables_in_cashewdb  |
++---------------------+
+| equipment           |
+| expenses            |
+| farmers             |
+| farms               |
+| fertilizers         |
+| governmentsubsidies |
+| harvest             |
+| irrigation          |
+| pestcontrol         |
+| sales               |
+| workers             |
++---------------------+
+11 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+-- EASY LEVEL QUERIES
+
+
+
+mysql> SELECT FarmerName
+    -> FROM Farmers;
++-------------------+
+| FarmerName        |
++-------------------+
+| K. Appala Naidu   |
+| P. Ramesh         |
+| B. Krishna Rao    |
+| T. Venkata Rao    |
+| D. Srinivasa Rao  |
+| M. Satyanarayana  |
+| G. Ravi Kumar     |
+| Y. Suresh Babu    |
+| N. Mohan Rao      |
+| R. Chandra Sekhar |
+| C. Ganesh         |
+| S. Narayana       |
+| L. Hari Krishna   |
+| A. Jagadeesh      |
+| K. Lakshmana Rao  |
+| P. Rajesh         |
+| B. Apparao        |
+| T. Siva Kumar     |
+| G. Bhaskar Rao    |
+| D. Venkatesh      |
++-------------------+
+20 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM Farms
+    -> WHERE NumberOfTrees > 700;
++--------+----------+--------------+-----------+---------------+-----------+----------------+
+| FarmID | FarmerID | FarmLocation | TotalArea | NumberOfTrees | SoilType  | IrrigationType |
++--------+----------+--------------+-----------+---------------+-----------+----------------+
+|    105 |        5 | Rentikota    |      9.10 |           810 | Laterite  | Drip           |
+|    108 |        8 | Baligam      |      8.80 |           760 | Laterite  | Drip           |
+|    112 |       12 | Kanchili     |      9.50 |           850 | Red Loamy | Drip           |
+|    115 |       15 | Baruva       |      8.40 |           730 | Red Loamy | Drip           |
+|    118 |       18 | Kaviti       |      9.20 |           820 | Red Loamy | Drip           |
+|    120 |       20 | Ichchapuram  |      8.60 |           780 | Red Sandy | Drip           |
++--------+----------+--------------+-----------+---------------+-----------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM Sales
+    -> WHERE TotalAmount > 700000;
++--------+-----------+------------------------+----------------+------------+-------------+------------+---------------+
+| SaleID | HarvestID | BuyerName              | QuantitySoldKg | PricePerKg | TotalAmount | SaleDate   | PaymentMode   |
++--------+-----------+------------------------+----------------+------------+-------------+------------+---------------+
+|    305 |       205 | Palasa Cashew Market   |        4200.00 |     195.00 |   819000.00 | 2025-03-30 | UPI           |
+|    308 |       208 | Green Agro Exports     |        3850.00 |     192.00 |   739200.00 | 2025-04-10 | UPI           |
+|    312 |       212 | Uddanam Cashew Exports |        4450.00 |     198.00 |   881100.00 | 2025-04-24 | Bank Transfer |
+|    315 |       215 | Palasa Cashew Market   |        3950.00 |     194.00 |   766300.00 | 2025-05-05 | Bank Transfer |
+|    318 |       218 | Uddanam Cashew Exports |        4300.00 |     200.00 |   860000.00 | 2025-05-16 | Bank Transfer |
+|    320 |       220 | Palasa Cashew Traders  |        4050.00 |     196.00 |   793800.00 | 2025-05-24 | Bank Transfer |
++--------+-----------+------------------------+----------------+------------+-------------+------------+---------------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM Irrigation
+    -> WHERE IrrigationMethod='Drip';
++--------------+--------+------------------+-------------+----------------+-----------------+
+| IrrigationID | FarmID | IrrigationMethod | WaterSource | IrrigationDate | WaterUsedLiters |
++--------------+--------+------------------+-------------+----------------+-----------------+
+|          901 |    101 | Drip             | Borewell    | 2025-01-05     |            4500 |
+|          903 |    103 | Drip             | Borewell    | 2025-01-09     |            4100 |
+|          905 |    105 | Drip             | Borewell    | 2025-01-13     |            6000 |
+|          908 |    108 | Drip             | Borewell    | 2025-01-19     |            6200 |
+|          911 |    111 | Drip             | Farm Pond   | 2025-01-25     |            4300 |
+|          912 |    112 | Drip             | Borewell    | 2025-01-27     |            7000 |
+|          915 |    115 | Drip             | Farm Pond   | 2025-02-03     |            6400 |
+|          918 |    118 | Drip             | Borewell    | 2025-02-09     |            7200 |
+|          920 |    120 | Drip             | Borewell    | 2025-02-13     |            6900 |
++--------------+--------+------------------+-------------+----------------+-----------------+
+9 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM GovernmentSubsidies
+    -> WHERE Status='Pending';
++-----------+----------+---------------------------+----------+--------------+---------+
+| SubsidyID | FarmerID | SchemeName                | Amount   | SanctionDate | Status  |
++-----------+----------+---------------------------+----------+--------------+---------+
+|       809 |        9 | Farm Mechanization Scheme | 50000.00 | 2025-02-02   | Pending |
+|       817 |       17 | Micro Irrigation Scheme   | 28000.00 | 2025-03-01   | Pending |
++-----------+----------+---------------------------+----------+--------------+---------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM Farmers
+    -> ORDER BY LandArea DESC;
++----------+-------------------+------------+--------------+------------+----------+
+| FarmerID | FarmerName        | Phone      | Village      | District   | LandArea |
++----------+-------------------+------------+--------------+------------+----------+
+|       12 | S. Narayana       | 9876543221 | Kanchili     | Srikakulam |     9.50 |
+|       18 | T. Siva Kumar     | 9876543227 | Kaviti       | Srikakulam |     9.20 |
+|        5 | D. Srinivasa Rao  | 9876543214 | Rentikota    | Srikakulam |     9.10 |
+|        8 | Y. Suresh Babu    | 9876543217 | Baligam      | Srikakulam |     8.80 |
+|       20 | D. Venkatesh      | 9876543229 | Ichchapuram  | Srikakulam |     8.60 |
+|       15 | K. Lakshmana Rao  | 9876543224 | Baruva       | Srikakulam |     8.40 |
+|        2 | P. Ramesh         | 9876543211 | Garudakhandi | Srikakulam |     8.20 |
+|       13 | L. Hari Krishna   | 9876543222 | Bhogabeni    | Srikakulam |     7.80 |
+|        4 | T. Venkata Rao    | 9876543213 | Pedanchala   | Srikakulam |     7.40 |
+|       17 | B. Apparao        | 9876543226 | Mulapeta     | Srikakulam |     7.30 |
+|        9 | N. Mohan Rao      | 9876543218 | Akkupalli    | Srikakulam |     7.00 |
+|        6 | M. Satyanarayana  | 9876543215 | Haripuram    | Srikakulam |     6.90 |
+|       19 | G. Bhaskar Rao    | 9876543228 | Bejjiputti   | Srikakulam |     6.80 |
+|       14 | A. Jagadeesh      | 9876543223 | Yenduva      | Srikakulam |     6.70 |
+|        1 | K. Appala Naidu   | 9876543210 | Boddapadu    | Srikakulam |     6.50 |
+|       10 | R. Chandra Sekhar | 9876543219 | Bathupuram   | Srikakulam |     6.10 |
+|       16 | P. Rajesh         | 9876543225 | Korlam       | Srikakulam |     5.90 |
+|        3 | B. Krishna Rao    | 9876543212 | Ganguvada    | Srikakulam |     5.80 |
+|       11 | C. Ganesh         | 9876543220 | Dokulapadu   | Srikakulam |     5.60 |
+|        7 | G. Ravi Kumar     | 9876543216 | Mandasa      | Srikakulam |     5.30 |
++----------+-------------------+------------+--------------+------------+----------+
+20 rows in set (0.00 sec)
+
+mysql> SELECT COUNT(*)
+    -> FROM Farmers;
++----------+
+| COUNT(*) |
++----------+
+|       20 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM Equipment
+    -> WHERE Status='Under Repair';
++-------------+--------+---------------+-------+--------------+----------+----------+--------------+
+| EquipmentID | FarmID | EquipmentName | Brand | PurchaseDate | Quantity | Cost     | Status       |
++-------------+--------+---------------+-------+--------------+----------+----------+--------------+
+|         710 |    110 | Brush Cutter  | Honda | 2024-07-25   |        1 | 22000.00 | Under Repair |
++-------------+--------+---------------+-------+--------------+----------+----------+--------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM Harvest
+    -> WHERE Grade='Grade A';
++-----------+--------+-------------+------------+---------+--------+
+| HarvestID | FarmID | HarvestDate | QuantityKg | Grade   | Season |
++-----------+--------+-------------+------------+---------+--------+
+|       201 |    101 | 2025-03-15  |    2850.50 | Grade A | Summer |
+|       202 |    102 | 2025-03-18  |    3520.75 | Grade A | Summer |
+|       204 |    104 | 2025-03-25  |    3185.00 | Grade A | Summer |
+|       205 |    105 | 2025-03-28  |    4250.40 | Grade A | Summer |
+|       208 |    108 | 2025-04-08  |    3895.20 | Grade A | Summer |
+|       209 |    109 | 2025-04-12  |    3270.50 | Grade A | Summer |
+|       212 |    112 | 2025-04-22  |    4485.90 | Grade A | Summer |
+|       213 |    113 | 2025-04-25  |    3665.40 | Grade A | Summer |
+|       215 |    115 | 2025-05-02  |    3980.60 | Grade A | Summer |
+|       217 |    117 | 2025-05-10  |    3375.80 | Grade A | Summer |
+|       218 |    118 | 2025-05-14  |    4325.70 | Grade A | Summer |
+|       220 |    120 | 2025-05-22  |    4105.35 | Grade A | Summer |
++-----------+--------+-------------+------------+---------+--------+
+12 rows in set (0.00 sec)
+
+ Medium Level Queries
+======================
+
+mysql> -- 1. Display farm and fertilizer used.
+mysql> SELECT FarmLocation, FertilizerName
+    -> FROM Farms
+    -> JOIN Fertilizers
+    -> ON Farms.FarmID=Fertilizers.FarmID;
++--------------+-----------------+
+| FarmLocation | FertilizerName  |
++--------------+-----------------+
+| Boddapadu    | Urea            |
+| Garudakhandi | DAP             |
+| Ganguvada    | NPK 20:20:20    |
+| Pedanchala   | Organic Compost |
+| Rentikota    | Potash          |
+| Haripuram    | Urea            |
+| Mandasa      | DAP             |
+| Baligam      | Vermicompost    |
+| Akkupalli    | NPK 19:19:19    |
+| Bathupuram   | Potash          |
+| Dokulapadu   | Organic Compost |
+| Kanchili     | DAP             |
+| Bhogabeni    | Urea            |
+| Yenduva      | NPK 20:20:20    |
+| Baruva       | Vermicompost    |
+| Korlam       | Potash          |
+| Mulapeta     | DAP             |
+| Kaviti       | Urea            |
+| Bejjiputti   | Organic Compost |
+| Ichchapuram  | NPK 19:19:19    |
++--------------+-----------------+
+20 rows in set (0.00 sec)
+
+mysql> -- 2. Display farm location and irrigation method.
+mysql> SELECT FarmLocation, IrrigationMethod
+    -> FROM Farms
+    -> JOIN Irrigation
+    -> ON Farms.FarmID=Irrigation.FarmID;
++--------------+------------------+
+| FarmLocation | IrrigationMethod |
++--------------+------------------+
+| Boddapadu    | Drip             |
+| Garudakhandi | Sprinkler        |
+| Ganguvada    | Drip             |
+| Pedanchala   | Canal            |
+| Rentikota    | Drip             |
+| Haripuram    | Sprinkler        |
+| Mandasa      | Borewell         |
+| Baligam      | Drip             |
+| Akkupalli    | Canal            |
+| Bathupuram   | Sprinkler        |
+| Dokulapadu   | Drip             |
+| Kanchili     | Drip             |
+| Bhogabeni    | Borewell         |
+| Yenduva      | Sprinkler        |
+| Baruva       | Drip             |
+| Korlam       | Canal            |
+| Mulapeta     | Borewell         |
+| Kaviti       | Drip             |
+| Bejjiputti   | Sprinkler        |
+| Ichchapuram  | Drip             |
++--------------+------------------+
+20 rows in set (0.00 sec)
+
+mysql> -- 3. Show farm and pest attacked.
+mysql> SELECT FarmLocation, PestName
+    -> FROM Farms
+    -> JOIN PestControl
+    -> ON Farms.FarmID=PestControl.FarmID;
++--------------+------------------+
+| FarmLocation | PestName         |
++--------------+------------------+
+| Boddapadu    | Tea Mosquito Bug |
+| Garudakhandi | Stem Borer       |
+| Ganguvada    | Leaf Miner       |
+| Pedanchala   | Aphids           |
+| Rentikota    | Fruit Borer      |
+| Haripuram    | Tea Mosquito Bug |
+| Mandasa      | Stem Borer       |
+| Baligam      | Leaf Miner       |
+| Akkupalli    | Fruit Borer      |
+| Bathupuram   | Aphids           |
+| Dokulapadu   | Tea Mosquito Bug |
+| Kanchili     | Stem Borer       |
+| Bhogabeni    | Leaf Miner       |
+| Yenduva      | Fruit Borer      |
+| Baruva       | Aphids           |
+| Korlam       | Tea Mosquito Bug |
+| Mulapeta     | Stem Borer       |
+| Kaviti       | Fruit Borer      |
+| Bejjiputti   | Leaf Miner       |
+| Ichchapuram  | Tea Mosquito Bug |
++--------------+------------------+
+20 rows in set (0.00 sec)
+
+mysql> -- 4. Display equipment used in every farm.
+mysql> SELECT FarmLocation, EquipmentName
+    -> FROM Farms
+    -> JOIN Equipment
+    -> ON Farms.FarmID=Equipment.FarmID;
++--------------+----------------------------+
+| FarmLocation | EquipmentName              |
++--------------+----------------------------+
+| Boddapadu    | Power Sprayer              |
+| Garudakhandi | Pruning Shears             |
+| Ganguvada    | Water Pump                 |
+| Pedanchala   | Ladder                     |
+| Rentikota    | Cashew Nut Dryer           |
+| Haripuram    | Tractor                    |
+| Mandasa      | Power Tiller               |
+| Baligam      | Wheelbarrow                |
+| Akkupalli    | Water Tank                 |
+| Bathupuram   | Brush Cutter               |
+| Dokulapadu   | Power Sprayer              |
+| Kanchili     | Mini Tractor               |
+| Bhogabeni    | Pruning Saw                |
+| Yenduva      | Drip Irrigation Kit        |
+| Baruva       | Harvest Collection Baskets |
+| Korlam       | Tarpaulin Sheets           |
+| Mulapeta     | Moisture Meter             |
+| Kaviti       | Cashew Grading Machine     |
+| Bejjiputti   | Hand Sprayer               |
+| Ichchapuram  | Generator                  |
++--------------+----------------------------+
+20 rows in set (0.00 sec)
+
+mysql> -- 5. Total equipment cost.
+mysql> SELECT SUM(Cost)
+    -> FROM Equipment;
++------------+
+| SUM(Cost)  |
++------------+
+| 1652100.00 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> -- 6. Count subsidies by status.
+mysql> SELECT Status,COUNT(*)
+    -> FROM GovernmentSubsidies
+    -> GROUP BY Status;
++----------+----------+
+| Status   | COUNT(*) |
++----------+----------+
+| Credited |       13 |
+| Approved |        5 |
+| Pending  |        2 |
++----------+----------+
+3 rows in set (0.00 sec)
+
+HARD LEVEL QURIES
+==================
+
+mysql> -- 1. Farmer with highest land area.
+mysql> SELECT FarmerName,LandArea
+    -> FROM Farmers
+    -> WHERE LandArea=(SELECT MAX(LandArea) FROM Farmers);
++-------------+----------+
+| FarmerName  | LandArea |
++-------------+----------+
+| S. Narayana |     9.50 |
++-------------+----------+
+1 row in set (0.00 sec)
+
+mysql> -- 2. Farm with highest harvest.
+mysql> SELECT FarmLocation,QuantityKg
+    -> FROM Farms
+    -> JOIN Harvest
+    -> ON Farms.FarmID=Harvest.FarmID
+    -> WHERE QuantityKg=(SELECT MAX(QuantityKg) FROM Harvest);
++--------------+------------+
+| FarmLocation | QuantityKg |
++--------------+------------+
+| Kanchili     |    4485.90 |
++--------------+------------+
+1 row in set (0.00 sec)
+
+mysql> -- 3. Farmer with highest sales.
+mysql> SELECT FarmerName,SUM(TotalAmount) AS TotalSales
+    -> FROM Farmers
+    -> JOIN Farms ON Farmers.FarmerID=Farms.FarmerID
+    -> JOIN Harvest ON Farms.FarmID=Harvest.FarmID
+    -> JOIN Sales ON Harvest.HarvestID=Sales.HarvestID
+    -> GROUP BY FarmerName
+    -> ORDER BY TotalSales DESC
+    -> LIMIT 1;
++-------------+------------+
+| FarmerName  | TotalSales |
++-------------+------------+
+| S. Narayana |  881100.00 |
++-------------+------------+
+1 row in set (0.00 sec)
+
+mysql> -- 4. Profit of each farm.
+mysql> SELECT
+    -> Farms.FarmLocation,
+    -> SUM(Sales.TotalAmount)-SUM(Expenses.Amount) AS Profit
+    -> FROM Farms
+    -> JOIN Harvest ON Farms.FarmID=Harvest.FarmID
+    -> JOIN Sales ON Harvest.HarvestID=Sales.HarvestID
+    -> JOIN Expenses ON Farms.FarmID=Expenses.FarmID
+    -> GROUP BY Farms.FarmLocation;
++--------------+-----------+
+| FarmLocation | Profit    |
++--------------+-----------+
+| Boddapadu    | 513800.00 |
+| Garudakhandi | 652500.00 |
+| Ganguvada    | 416200.00 |
+| Pedanchala   | 587000.00 |
+| Rentikota    | 800500.00 |
+| Haripuram    | 524600.00 |
+| Mandasa      | 351400.00 |
+| Baligam      | 732450.00 |
+| Akkupalli    | 600300.00 |
+| Bathupuram   | 477500.00 |
+| Dokulapadu   | 379500.00 |
+| Kanchili     | 874300.00 |
+| Bhogabeni    | 674500.00 |
+| Yenduva      | 510700.00 |
+| Baruva       | 744300.00 |
+| Korlam       | 429200.00 |
+| Mulapeta     | 621850.00 |
+| Kaviti       | 852800.00 |
+| Bejjiputti   | 536900.00 |
+| Ichchapuram  | 774300.00 |
++--------------+-----------+
+20 rows in set (0.05 sec)
+
+mysql> -- 5. Farmer receiving maximum subsidy.
+mysql> SELECT FarmerName,Amount
+    -> FROM Farmers
+    -> JOIN GovernmentSubsidies
+    -> ON Farmers.FarmerID=GovernmentSubsidies.FarmerID
+    -> WHERE Amount=(SELECT MAX(Amount) FROM GovernmentSubsidies);
++------------------+----------+
+| FarmerName       | Amount   |
++------------------+----------+
+| K. Lakshmana Rao | 55000.00 |
++------------------+----------+
+1 row in set (0.00 sec)
+
+mysql> -- 6. Total subsidy received by each farmer.
+mysql> SELECT FarmerName,SUM(Amount)
+    -> FROM Farmers
+    -> JOIN GovernmentSubsidies
+    -> ON Farmers.FarmerID=GovernmentSubsidies.FarmerID
+    -> GROUP BY FarmerName;
++-------------------+-------------+
+| FarmerName        | SUM(Amount) |
++-------------------+-------------+
+| K. Appala Naidu   |     6000.00 |
+| P. Ramesh         |    13500.00 |
+| B. Krishna Rao    |     8500.00 |
+| T. Venkata Rao    |    25000.00 |
+| D. Srinivasa Rao  |    40000.00 |
+| M. Satyanarayana  |     6000.00 |
+| G. Ravi Kumar     |    13500.00 |
+| Y. Suresh Babu    |    30000.00 |
+| N. Mohan Rao      |    50000.00 |
+| R. Chandra Sekhar |     6000.00 |
+| C. Ganesh         |    45000.00 |
+| S. Narayana       |    13500.00 |
+| L. Hari Krishna   |    35000.00 |
+| A. Jagadeesh      |     9000.00 |
+| K. Lakshmana Rao  |    55000.00 |
+| P. Rajesh         |     6000.00 |
+| B. Apparao        |    28000.00 |
+| T. Siva Kumar     |    42000.00 |
+| G. Bhaskar Rao    |    38000.00 |
+| D. Venkatesh      |    13500.00 |
++-------------------+-------------+
+20 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
