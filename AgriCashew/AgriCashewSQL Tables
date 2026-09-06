@@ -1,0 +1,645 @@
+
+mysql> CREATE DATABASE agricashew;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> USE agricashew;
+Database changed
+mysql> -- Create user table
+mysql> --This stores login details for both farmers and buyers.
+    -> -- This stores login details for both farmers and buyers.
+    -> ^Z^C
+mysql> CREATE TABLE users (
+    ->     user_id INT PRIMARY KEY AUTO_INCREMENT,
+    ->     role ENUM('FARMER','BUYER') NOT NULL,
+    ->     username VARCHAR(50) UNIQUE NOT NULL,
+    ->     password VARCHAR(255) NOT NULL,
+    ->     phone VARCHAR(15) UNIQUE NOT NULL,
+    ->     email VARCHAR(100),
+    ->     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> INSERT INTO users
+    -> (role, username, password_hash, phone, email)
+    -> VALUES
+    -> ('FARMER', 'ravi123', 'hash123', '9876543210', 'ravi@gmail.com'),
+    -> ('FARMER', 'suresh123', 'hash456', '9876543211', 'suresh@gmail.com'),
+    -> ('FARMER', 'anitha123', 'hash789', '9876543212', 'anitha@gmail.com'),
+    -> ('BUYER', 'abcfoods', 'hash111', '9876543220', 'abcfoods@gmail.com'),
+    -> ('BUYER', 'greenmart', 'hash222', '9876543221', 'greenmart@gmail.com');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from users;
++---------+--------+-----------+---------------+------------+---------------------+---------------------+
+| user_id | role   | username  | password_hash | phone      | email               | created_at          |
++---------+--------+-----------+---------------+------------+---------------------+---------------------+
+|       1 | FARMER | ravi123   | hash123       | 9876543210 | ravi@gmail.com      | 2026-09-04 19:07:33 |
+|       2 | FARMER | suresh123 | hash456       | 9876543211 | suresh@gmail.com    | 2026-09-04 19:07:33 |
+|       3 | FARMER | anitha123 | hash789       | 9876543212 | anitha@gmail.com    | 2026-09-04 19:07:33 |
+|       4 | BUYER  | abcfoods  | hash111       | 9876543220 | abcfoods@gmail.com  | 2026-09-04 19:07:33 |
+|       5 | BUYER  | greenmart | hash222       | 9876543221 | greenmart@gmail.com | 2026-09-04 19:07:33 |
++---------+--------+-----------+---------------+------------+---------------------+---------------------+
+5 rows in set (0.00 sec)
+
+mysql> -- Farmers Table
+mysql> CREATE TABLE farmers (
+    ->     farmer_id INT PRIMARY KEY AUTO_INCREMENT,
+    ->     user_id INT UNIQUE NOT NULL,
+    ->     farmer_code VARCHAR(20) UNIQUE NOT NULL,
+    ->     full_name VARCHAR(100) NOT NULL,
+    ->     address VARCHAR(255),
+    ->     experience_years INT,
+    ->     FOREIGN KEY (user_id) REFERENCES users(user_id)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO farmers
+    -> (user_id, farmer_code, full_name, address, experience_years)
+    -> VALUES
+    -> (1, 'F001', 'Ravi Kumar', 'Srikakulam, Andhra Pradesh', 8),
+    -> (2, 'F002', 'Suresh Rao', 'Vizianagaram, Andhra Pradesh', 12),
+    -> (3, 'F003', 'Anitha Devi', 'Tekkali, Andhra Pradesh', 5);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from farmers;
++-----------+---------+-------------+-------------+------------------------------+------------------+
+| farmer_id | user_id | farmer_code | full_name   | address                      | experience_years |
++-----------+---------+-------------+-------------+------------------------------+------------------+
+|         1 |       1 | F001        | Ravi Kumar  | Srikakulam, Andhra Pradesh   |                8 |
+|         2 |       2 | F002        | Suresh Rao  | Vizianagaram, Andhra Pradesh |               12 |
+|         3 |       3 | F003        | Anitha Devi | Tekkali, Andhra Pradesh      |                5 |
++-----------+---------+-------------+-------------+------------------------------+------------------+
+3 rows in set (0.00 sec)
+
+mysql> -- Buyers Table
+mysql> CREATE TABLE buyers (
+    ->     buyer_id INT PRIMARY KEY AUTO_INCREMENT,
+    ->     user_id INT UNIQUE NOT NULL,
+    ->     buyer_code VARCHAR(20) UNIQUE NOT NULL,
+    ->     full_name VARCHAR(100) NOT NULL,
+    ->     address VARCHAR(255),
+    ->     experience_years INT,
+    ->     FOREIGN KEY (user_id) REFERENCES users(user_id)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO buyers
+    -> (user_id, buyer_code, full_name, address, experience_years)
+    -> VALUES
+    -> (4, 'B001', 'ABC Foods Pvt Ltd', 'Visakhapatnam, Andhra Pradesh', 10),
+    -> (5, 'B002', 'Green Mart Traders', 'Vijayawada, Andhra Pradesh', 7);
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from buyers;
++----------+---------+------------+--------------------+-------------------------------+------------------+
+| buyer_id | user_id | buyer_code | full_name          | address                       | experience_years |
++----------+---------+------------+--------------------+-------------------------------+------------------+
+|        1 |       4 | B001       | ABC Foods Pvt Ltd  | Visakhapatnam, Andhra Pradesh |               10 |
+|        2 |       5 | B002       | Green Mart Traders | Vijayawada, Andhra Pradesh    |                7 |
++----------+---------+------------+--------------------+-------------------------------+------------------+
+2 rows in set (0.00 sec)
+
+mysql> -- farm Table
+mysql> CREATE TABLE farms (
+    ->     farm_id INT PRIMARY KEY AUTO_INCREMENT,
+    ->     farmer_id INT NOT NULL,
+    ->     farm_name VARCHAR(100),
+    ->     address VARCHAR(255),
+    ->     latitude DECIMAL(10,7),
+    ->     longitude DECIMAL(10,7),
+    ->     FOREIGN KEY (farmer_id) REFERENCES farmers(farmer_id)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO farms
+    -> (farmer_id, farm_name, address, latitude, longitude)
+    -> VALUES
+    -> (1, 'Ravi Cashew Farm', 'Srikakulam', 18.2949, 83.8938),
+    -> (2, 'Suresh Cashew Garden', 'Vizianagaram', 18.1067, 83.3956),
+    -> (3, 'Anitha Farm', 'Tekkali', 18.6050, 84.2350);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from farms;
++---------+-----------+----------------------+--------------+------------+------------+
+| farm_id | farmer_id | farm_name            | address      | latitude   | longitude  |
++---------+-----------+----------------------+--------------+------------+------------+
+|       1 |         1 | Ravi Cashew Farm     | Srikakulam   | 18.2949000 | 83.8938000 |
+|       2 |         2 | Suresh Cashew Garden | Vizianagaram | 18.1067000 | 83.3956000 |
+|       3 |         3 | Anitha Farm          | Tekkali      | 18.6050000 | 84.2350000 |
++---------+-----------+----------------------+--------------+------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> -- Harvests Table
+mysql> CREATE TABLE harvests (
+    ->     harvest_id INT PRIMARY KEY AUTO_INCREMENT,
+    ->     farmer_id INT NOT NULL,
+    ->     harvest_date DATE NOT NULL,
+    ->     quantity_kg DECIMAL(10,2) NOT NULL,
+    ->     quality_grade ENUM('A','B','C') NOT NULL,
+    ->     notes VARCHAR(255),
+    ->     FOREIGN KEY (farmer_id) REFERENCES farmers(farmer_id)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO harvests
+    -> (farmer_id, harvest_date, quantity_kg, quality_grade, notes)
+    -> VALUES
+    -> (1, '2026-09-01', 250.50, 'A', 'Good quality'),
+    -> (1, '2026-09-02', 180.00, 'B', 'Medium quality'),
+    -> (2, '2026-09-01', 320.00, 'A', 'Premium nuts'),
+    -> (2, '2026-09-02', 275.50, 'A', 'Good quality'),
+    -> (3, '2026-09-01', 150.00, 'B', 'Normal harvest');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from Harvests;
++------------+-----------+--------------+-------------+---------------+----------------+
+| harvest_id | farmer_id | harvest_date | quantity_kg | quality_grade | notes          |
++------------+-----------+--------------+-------------+---------------+----------------+
+|          1 |         1 | 2026-09-01   |      250.50 | A             | Good quality   |
+|          2 |         1 | 2026-09-02   |      180.00 | B             | Medium quality |
+|          3 |         2 | 2026-09-01   |      320.00 | A             | Premium nuts   |
+|          4 |         2 | 2026-09-02   |      275.50 | A             | Good quality   |
+|          5 |         3 | 2026-09-01   |      150.00 | B             | Normal harvest |
++------------+-----------+--------------+-------------+---------------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> -- cashew prices Table
+mysql> CREATE TABLE cashew_prices (
+    ->     price_id INT PRIMARY KEY AUTO_INCREMENT,
+    ->     price_date DATE NOT NULL,
+    ->     quality_grade ENUM('A','B','C') NOT NULL,
+    ->     price_per_kg DECIMAL(10,2) NOT NULL,
+    ->     price_per_ton DECIMAL(12,2) NOT NULL,
+    ->     UNIQUE(price_date, quality_grade)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO cashew_prices
+    -> (price_date, quality_grade, price_per_kg, price_per_ton)
+    -> VALUES
+    -> ('2026-09-01', 'A', 850.00, 850000.00),
+    -> ('2026-09-01', 'B', 700.00, 700000.00),
+    -> ('2026-09-01', 'C', 550.00, 550000.00),
+    -> ('2026-09-02', 'A', 875.00, 875000.00),
+    -> ('2026-09-02', 'B', 720.00, 720000.00),
+    -> ('2026-09-02', 'C', 570.00, 570000.00);
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from cashew_prices;
++----------+------------+---------------+--------------+---------------+
+| price_id | price_date | quality_grade | price_per_kg | price_per_ton |
++----------+------------+---------------+--------------+---------------+
+|        1 | 2026-09-01 | A             |       850.00 |     850000.00 |
+|        2 | 2026-09-01 | B             |       700.00 |     700000.00 |
+|        3 | 2026-09-01 | C             |       550.00 |     550000.00 |
+|        4 | 2026-09-02 | A             |       875.00 |     875000.00 |
+|        5 | 2026-09-02 | B             |       720.00 |     720000.00 |
+|        6 | 2026-09-02 | C             |       570.00 |     570000.00 |
++----------+------------+---------------+--------------+---------------+
+6 rows in set (0.00 sec)
+
+mysql> -- Weather Table
+mysql> CREATE TABLE weather (
+    ->     weather_id INT PRIMARY KEY AUTO_INCREMENT,
+    ->     location VARCHAR(100) NOT NULL,
+    ->     weather_date DATE NOT NULL,
+    ->     temperature_c DECIMAL(5,2),
+    ->     humidity_percent DECIMAL(5,2),
+    ->     rainfall_mm DECIMAL(8,2),
+    ->     condition_text VARCHAR(100)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO weather
+    -> (location, weather_date, temperature_c, humidity_percent, rainfall_mm, condition_text)
+    -> VALUES
+    -> ('Srikakulam', '2026-09-01', 29.5, 75, 2.5, 'Partly Cloudy'),
+    -> ('Vizianagaram', '2026-09-01', 30.2, 70, 0.0, 'Sunny'),
+    -> ('Tekkali', '2026-09-01', 28.8, 80, 5.2, 'Rainy');
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> -- Buyer Ratings Table
+mysql> CREATE TABLE buyer_ratings (
+    ->     rating_id INT PRIMARY KEY AUTO_INCREMENT,
+    ->     buyer_id INT NOT NULL,
+    ->     farmer_id INT NOT NULL,
+    ->     rating INT NOT NULL,
+    ->     review VARCHAR(500),
+    ->     rating_date DATE NOT NULL,
+    ->     CHECK (rating BETWEEN 1 AND 5),
+    ->     FOREIGN KEY (buyer_id) REFERENCES buyers(buyer_id),
+    ->     FOREIGN KEY (farmer_id) REFERENCES farmers(farmer_id)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO buyer_ratings
+    -> (buyer_id, farmer_id, rating, review, rating_date)
+    -> VALUES
+    -> (1, 1, 5, 'Excellent quality cashews', '2026-09-01'),
+    -> (1, 2, 4, 'Good quality and timely supply', '2026-09-01'),
+    -> (2, 3, 4, 'Good farmer and quality products', '2026-09-02');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from buyer_ratings;
++-----------+----------+-----------+--------+----------------------------------+-------------+
+| rating_id | buyer_id | farmer_id | rating | review                           | rating_date |
++-----------+----------+-----------+--------+----------------------------------+-------------+
+|         1 |        1 |         1 |      5 | Excellent quality cashews        | 2026-09-01  |
+|         2 |        1 |         2 |      4 | Good quality and timely supply   | 2026-09-01  |
+|         3 |        2 |         3 |      4 | Good farmer and quality products | 2026-09-02  |
++-----------+----------+-----------+--------+----------------------------------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> -- Farmer Ratings Table
+mysql> CREATE TABLE farmer_ratings (
+    ->     rating_id INT PRIMARY KEY AUTO_INCREMENT,
+    ->     farmer_id INT NOT NULL,
+    ->     buyer_id INT NOT NULL,
+    ->     rating INT NOT NULL,
+    ->     review VARCHAR(500),
+    ->     rating_date DATE NOT NULL,
+    ->     CHECK (rating BETWEEN 1 AND 5),
+    ->     FOREIGN KEY (farmer_id) REFERENCES farmers(farmer_id),
+    ->     FOREIGN KEY (buyer_id) REFERENCES buyers(buyer_id)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO farmer_ratings
+    -> (farmer_id, buyer_id, rating, review, rating_date)
+    -> VALUES
+    -> (1, 1, 5, 'Reliable buyer with good payment', '2026-09-01'),
+    -> (2, 1, 4, 'Good communication', '2026-09-01'),
+    -> (3, 2, 5, 'Very trustworthy buyer', '2026-09-02');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from farmer_ratings;
++-----------+-----------+----------+--------+----------------------------------+-------------+
+| rating_id | farmer_id | buyer_id | rating | review                           | rating_date |
++-----------+-----------+----------+--------+----------------------------------+-------------+
+|         1 |         1 |        1 |      5 | Reliable buyer with good payment | 2026-09-01  |
+|         2 |         2 |        1 |      4 | Good communication               | 2026-09-01  |
+|         3 |         3 |        2 |      5 | Very trustworthy buyer           | 2026-09-02  |
++-----------+-----------+----------+--------+----------------------------------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> -- Farmer Connections Table
+mysql> CREATE TABLE farmer_connections (
+    ->     connection_id INT PRIMARY KEY AUTO_INCREMENT,
+    ->     farmer_id INT NOT NULL,
+    ->     connected_farmer_id INT NOT NULL,
+    ->     status ENUM('PENDING','ACCEPTED','REJECTED') DEFAULT 'PENDING',
+    ->     requested_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    ->     UNIQUE(farmer_id, connected_farmer_id),
+    ->     FOREIGN KEY (farmer_id) REFERENCES farmers(farmer_id),
+    ->     FOREIGN KEY (connected_farmer_id) REFERENCES farmers(farmer_id)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO farmer_connections
+    -> (farmer_id, connected_farmer_id, status)
+    -> VALUES
+    -> (1, 2, 'ACCEPTED'),
+    -> (1, 3, 'PENDING'),
+    -> (2, 3, 'ACCEPTED');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from farmer_connections;
++---------------+-----------+---------------------+----------+---------------------+
+| connection_id | farmer_id | connected_farmer_id | status   | requested_at        |
++---------------+-----------+---------------------+----------+---------------------+
+|             1 |         1 |                   2 | ACCEPTED | 2026-09-04 19:16:25 |
+|             2 |         1 |                   3 | PENDING  | 2026-09-04 19:16:25 |
+|             3 |         2 |                   3 | ACCEPTED | 2026-09-04 19:16:25 |
++---------------+-----------+---------------------+----------+---------------------+
+3 rows in set (0.00 sec)
+
+mysql> -- Equipment Table
+mysql> CREATE TABLE equipment (
+    ->     equipment_id INT PRIMARY KEY AUTO_INCREMENT,
+    ->     farmer_id INT NOT NULL,
+    ->     equipment_name VARCHAR(100) NOT NULL,
+    ->     description VARCHAR(255),
+    ->     location VARCHAR(100),
+    ->     availability_status ENUM('AVAILABLE','UNAVAILABLE') DEFAULT 'AVAILABLE',
+    ->     FOREIGN KEY (farmer_id) REFERENCES farmers(farmer_id)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> INSERT INTO equipment
+    -> (farmer_id, equipment_name, description, location, availability_status)
+    -> VALUES
+    -> (1, 'Cashew Harvester', 'Mechanical harvesting machine', 'Srikakulam', 'AVAILABLE'),
+    -> (2, 'Sprayer Machine', 'Agricultural pesticide sprayer', 'Vizianagaram', 'AVAILABLE'),
+    -> (3, 'Tractor', 'Small farming tractor', 'Tekkali', 'UNAVAILABLE');
+Query OK, 3 rows affected (0.03 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from equipment;
++--------------+-----------+------------------+--------------------------------+--------------+---------------------+
+| equipment_id | farmer_id | equipment_name   | description                    | location     | availability_status |
++--------------+-----------+------------------+--------------------------------+--------------+---------------------+
+|            1 |         1 | Cashew Harvester | Mechanical harvesting machine  | Srikakulam   | AVAILABLE           |
+|            2 |         2 | Sprayer Machine  | Agricultural pesticide sprayer | Vizianagaram | AVAILABLE           |
+|            3 |         3 | Tractor          | Small farming tractor          | Tekkali      | UNAVAILABLE         |
++--------------+-----------+------------------+--------------------------------+--------------+---------------------+
+3 rows in set (0.00 sec)
+
+mysql> -- Equipment Requests Table
+mysql> CREATE TABLE equipment_requests (
+    ->     request_id INT PRIMARY KEY AUTO_INCREMENT,
+    ->     equipment_id INT NOT NULL,
+    ->     requester_farmer_id INT NOT NULL,
+    ->     request_date DATE NOT NULL,
+    ->     start_date DATE,
+    ->     end_date DATE,
+    ->     status ENUM('PENDING','APPROVED','REJECTED','RETURNED') DEFAULT 'PENDING',
+    ->     FOREIGN KEY (equipment_id) REFERENCES equipment(equipment_id),
+    ->     FOREIGN KEY (requester_farmer_id) REFERENCES farmers(farmer_id)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO equipment_requests
+    -> (equipment_id, requester_farmer_id, request_date, start_date, end_date, status)
+    -> VALUES
+    -> (1, 2, '2026-09-01', '2026-09-05', '2026-09-07', 'APPROVED'),
+    -> (2, 1, '2026-09-02', '2026-09-06', '2026-09-08', 'PENDING');
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from equipment_requests;
++------------+--------------+---------------------+--------------+------------+------------+----------+
+| request_id | equipment_id | requester_farmer_id | request_date | start_date | end_date   | status   |
++------------+--------------+---------------------+--------------+------------+------------+----------+
+|          1 |            1 |                   2 | 2026-09-01   | 2026-09-05 | 2026-09-07 | APPROVED |
+|          2 |            2 |                   1 | 2026-09-02   | 2026-09-06 | 2026-09-08 | PENDING  |
++------------+--------------+---------------------+--------------+------------+------------+----------+
+2 rows in set (0.00 sec)
+
+mysql> -- Contact Requests Table
+mysql> CREATE TABLE contact_requests (
+    ->     contact_id INT PRIMARY KEY AUTO_INCREMENT,
+    ->     sender_user_id INT NOT NULL,
+    ->     receiver_user_id INT NOT NULL,
+    ->     message VARCHAR(500),
+    ->     status ENUM('PENDING','ACCEPTED','REJECTED') DEFAULT 'PENDING',
+    ->     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    ->     FOREIGN KEY (sender_user_id) REFERENCES users(user_id),
+    ->     FOREIGN KEY (receiver_user_id) REFERENCES users(user_id)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO contact_requests
+    -> (sender_user_id, receiver_user_id, message, status)
+    -> VALUES
+    -> (4, 1, 'I am interested in purchasing your Grade A cashews.', 'ACCEPTED'),
+    -> (5, 2, 'Please share your available harvest quantity.', 'PENDING'),
+    -> (1, 4, 'I have 250 kg of Grade A cashews available.', 'ACCEPTED');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from contact_requests;
++------------+----------------+------------------+-----------------------------------------------------+----------+---------------------+
+| contact_id | sender_user_id | receiver_user_id | message                                             | status   | created_at          |
++------------+----------------+------------------+-----------------------------------------------------+----------+---------------------+
+|          1 |              4 |                1 | I am interested in purchasing your Grade A cashews. | ACCEPTED | 2026-09-04 19:19:16 |
+|          2 |              5 |                2 | Please share your available harvest quantity.       | PENDING  | 2026-09-04 19:19:16 |
+|          3 |              1 |                4 | I have 250 kg of Grade A cashews available.         | ACCEPTED | 2026-09-04 19:19:16 |
++------------+----------------+------------------+-----------------------------------------------------+----------+---------------------+
+3 rows in set (0.00 sec)
+
+
+mysql> -- Easy Level
+mysql> -- 1.Display all farmers
+mysql> SELECT * FROM farmers;
++-----------+---------+-------------+-------------+------------------------------+------------------+
+| farmer_id | user_id | farmer_code | full_name   | address                      | experience_years |
++-----------+---------+-------------+-------------+------------------------------+------------------+
+|         1 |       1 | F001        | Ravi Kumar  | Srikakulam, Andhra Pradesh   |                8 |
+|         2 |       2 | F002        | Suresh Rao  | Vizianagaram, Andhra Pradesh |               12 |
+|         3 |       3 | F003        | Anitha Devi | Tekkali, Andhra Pradesh      |                5 |
++-----------+---------+-------------+-------------+------------------------------+------------------+
+3 rows in set (0.01 sec)
+
+mysql> -- 2. Display farmers with more than 5 years of experience
+mysql> SELECT full_name, experience_years
+    -> FROM farmers
+    -> WHERE experience_years > 5;
++------------+------------------+
+| full_name  | experience_years |
++------------+------------------+
+| Ravi Kumar |                8 |
+| Suresh Rao |               12 |
++------------+------------------+
+2 rows in set (0.00 sec)
+
+mysql> -- 3. Display all Grade A harvests
+mysql> SELECT *
+    -> FROM harvests
+    -> WHERE quality_grade = 'A';
++------------+-----------+--------------+-------------+---------------+--------------+
+| harvest_id | farmer_id | harvest_date | quantity_kg | quality_grade | notes        |
++------------+-----------+--------------+-------------+---------------+--------------+
+|          1 |         1 | 2026-09-01   |      250.50 | A             | Good quality |
+|          3 |         2 | 2026-09-01   |      320.00 | A             | Premium nuts |
+|          4 |         2 | 2026-09-02   |      275.50 | A             | Good quality |
++------------+-----------+--------------+-------------+---------------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> -- 4. Display available equipment
+mysql> SELECT *
+    -> FROM equipment
+    -> WHERE availability_status = 'AVAILABLE';
++--------------+-----------+------------------+--------------------------------+--------------+---------------------+
+| equipment_id | farmer_id | equipment_name   | description                    | location     | availability_status |
++--------------+-----------+------------------+--------------------------------+--------------+---------------------+
+|            1 |         1 | Cashew Harvester | Mechanical harvesting machine  | Srikakulam   | AVAILABLE           |
+|            2 |         2 | Sprayer Machine  | Agricultural pesticide sprayer | Vizianagaram | AVAILABLE           |
++--------------+-----------+------------------+--------------------------------+--------------+---------------------+
+2 rows in set (0.00 sec)
+
+mysql> -- 5. Display cashew prices greater than ₹800 per kg
+mysql> SELECT *
+    -> FROM cashew_prices
+    -> WHERE price_per_kg > 800;
++----------+------------+---------------+--------------+---------------+
+| price_id | price_date | quality_grade | price_per_kg | price_per_ton |
++----------+------------+---------------+--------------+---------------+
+|        1 | 2026-09-01 | A             |       850.00 |     850000.00 |
+|        4 | 2026-09-02 | A             |       875.00 |     875000.00 |
++----------+------------+---------------+--------------+---------------+
+2 rows in set (0.01 sec)
+
+
+mysql> -- Medium Level
+mysql> -- 1. Display farmer names with their farm names
+mysql> SELECT f.full_name, fm.farm_name
+    -> FROM farmers f
+    -> JOIN farms fm
+    -> ON f.farmer_id = fm.farmer_id;
++-------------+----------------------+
+| full_name   | farm_name            |
++-------------+----------------------+
+| Ravi Kumar  | Ravi Cashew Farm     |
+| Suresh Rao  | Suresh Cashew Garden |
+| Anitha Devi | Anitha Farm          |
++-------------+----------------------+
+3 rows in set (0.00 sec)
+
+mysql> -- 2. Display farmers and their harvest quantities
+mysql> SELECT f.full_name, h.quantity_kg
+    -> FROM farmers f
+    -> JOIN harvests h
+    -> ON f.farmer_id = h.farmer_id;
++-------------+-------------+
+| full_name   | quantity_kg |
++-------------+-------------+
+| Ravi Kumar  |      250.50 |
+| Ravi Kumar  |      180.00 |
+| Suresh Rao  |      320.00 |
+| Suresh Rao  |      275.50 |
+| Anitha Devi |      150.00 |
++-------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> -- 3. Find total harvest quantity of each farmer
+mysql> SELECT f.full_name, SUM(h.quantity_kg) AS total_harvest
+    -> FROM farmers f
+    -> JOIN harvests h
+    -> ON f.farmer_id = h.farmer_id
+    -> GROUP BY f.farmer_id, f.full_name;
++-------------+---------------+
+| full_name   | total_harvest |
++-------------+---------------+
+| Ravi Kumar  |        430.50 |
+| Suresh Rao  |        595.50 |
+| Anitha Devi |        150.00 |
++-------------+---------------+
+3 rows in set (0.01 sec)
+
+mysql> -- 4. Find average rating of each farmer
+mysql> SELECT f.full_name, AVG(br.rating) AS average_rating
+    -> FROM farmers f
+    -> JOIN buyer_ratings br
+    -> ON f.farmer_id = br.farmer_id
+    -> GROUP BY f.farmer_id, f.full_name;
++-------------+----------------+
+| full_name   | average_rating |
++-------------+----------------+
+| Ravi Kumar  |         5.0000 |
+| Suresh Rao  |         4.0000 |
+| Anitha Devi |         4.0000 |
++-------------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> -- 5. Display equipment and its owner's name
+mysql> SELECT f.full_name, e.equipment_name, e.location
+    -> FROM farmers f
+    -> JOIN equipment e
+    -> ON f.farmer_id = e.farmer_id;
++-------------+------------------+--------------+
+| full_name   | equipment_name   | location     |
++-------------+------------------+--------------+
+| Ravi Kumar  | Cashew Harvester | Srikakulam   |
+| Suresh Rao  | Sprayer Machine  | Vizianagaram |
+| Anitha Devi | Tractor          | Tekkali      |
++-------------+------------------+--------------+
+3 rows in set (0.00 sec)
+
+
+mysql> -- Hard Level
+mysql> -- 1. Find the farmer with the highest total harvest
+mysql> SELECT f.full_name, SUM(h.quantity_kg) AS total_harvest
+    -> FROM farmers f
+    -> JOIN harvests h
+    -> ON f.farmer_id = h.farmer_id
+    -> GROUP BY f.farmer_id, f.full_name
+    -> ORDER BY total_harvest DESC
+    -> LIMIT 1;
++------------+---------------+
+| full_name  | total_harvest |
++------------+---------------+
+| Suresh Rao |        595.50 |
++------------+---------------+
+1 row in set (0.00 sec)
+
+mysql> -- 2. Find farmers whose average rating is greater than 4
+mysql> SELECT f.full_name, AVG(br.rating) AS average_rating
+    -> FROM farmers f
+    -> JOIN buyer_ratings br
+    -> ON f.farmer_id = br.farmer_id
+    -> GROUP BY f.farmer_id, f.full_name
+    -> HAVING AVG(br.rating) > 4;
++------------+----------------+
+| full_name  | average_rating |
++------------+----------------+
+| Ravi Kumar |         5.0000 |
++------------+----------------+
+1 row in set (0.01 sec)
+
+mysql> -- 3. Find farmers who have both Grade A and Grade B harvests
+mysql> SELECT f.full_name
+    -> FROM farmers f
+    -> JOIN harvests h
+    -> ON f.farmer_id = h.farmer_id
+    -> WHERE h.quality_grade IN ('A', 'B')
+    -> GROUP BY f.farmer_id, f.full_name
+    -> HAVING COUNT(DISTINCT h.quality_grade) = 2;
++------------+
+| full_name  |
++------------+
+| Ravi Kumar |
++------------+
+1 row in set (0.00 sec)
+
+mysql> -- 4. Calculate the estimated value of each harvest
+mysql> SELECT
+    ->     f.full_name,
+    ->     h.quantity_kg,
+    ->     h.quality_grade,
+    ->     cp.price_per_kg,
+    ->     h.quantity_kg * cp.price_per_kg AS estimated_value
+    -> FROM farmers f
+    -> JOIN harvests h
+    -> ON f.farmer_id = h.farmer_id
+    -> JOIN cashew_prices cp
+    -> ON h.harvest_date = cp.price_date
+    -> AND h.quality_grade = cp.quality_grade;
++-------------+-------------+---------------+--------------+-----------------+
+| full_name   | quantity_kg | quality_grade | price_per_kg | estimated_value |
++-------------+-------------+---------------+--------------+-----------------+
+| Ravi Kumar  |      250.50 | A             |       850.00 |     212925.0000 |
+| Ravi Kumar  |      180.00 | B             |       720.00 |     129600.0000 |
+| Suresh Rao  |      320.00 | A             |       850.00 |     272000.0000 |
+| Suresh Rao  |      275.50 | A             |       875.00 |     241062.5000 |
+| Anitha Devi |      150.00 | B             |       700.00 |     105000.0000 |
++-------------+-------------+---------------+--------------+-----------------+
+5 rows in set (0.01 sec)
+
+mysql> -- 5. Display accepted farmer connections
+mysql> SELECT
+    ->     f1.full_name AS farmer,
+    ->     f2.full_name AS connected_farmer,
+    ->     fc.status
+    -> FROM farmer_connections fc
+    -> JOIN farmers f1
+    -> ON fc.farmer_id = f1.farmer_id
+    -> JOIN farmers f2
+    -> ON fc.connected_farmer_id = f2.farmer_id
+    -> WHERE fc.status = 'ACCEPTED';
++------------+------------------+----------+
+| farmer     | connected_farmer | status   |
++------------+------------------+----------+
+| Ravi Kumar | Suresh Rao       | ACCEPTED |
+| Suresh Rao | Anitha Devi      | ACCEPTED |
++------------+------------------+----------+
+2 rows in set (0.00 sec)
