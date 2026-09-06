@@ -224,249 +224,191 @@ Student-Management-System/
 The **Student Management System** demonstrates how relational databases can be used to manage student academic information efficiently. The project connects students, subjects, exams, and marks using primary and foreign key relationships and provides SQL queries ranging from basic data retrieval to advanced aggregation and conditional logic.
 
 
+# 🌱 AgriCashew Management System
 
-
-# 🌱 Cashew Management System
-
-## 📌 Overview
-
-The **Cashew Management System** is a database management project designed to manage and organize information related to cashew farming. The system stores details about farmers, farms, harvesting, sales, workers, fertilizers, expenses, equipment, irrigation, pest control, and government subsidies.
-
-The main goal of this project is to help manage farming activities efficiently and maintain accurate records in a structured database.
+## 📌 About the Project
+The **AgriCashew Management System** is a MySQL-based database project designed to manage and organize information related to **cashew farming and agricultural activities**.
+The main purpose of this project is to provide a centralized database where information about **farmers, buyers, farms, harvests, farming equipment, cashew prices, weather conditions, requests, connections, and ratings** can be stored and managed efficiently.
+Farmers can maintain their farm and harvest information, while buyers can view farmer-related information and interact with them for business purposes. The system also supports **equipment requests**, allowing users to manage farming equipment and requests.
+The project also includes **cashew price management**, which helps store market prices according to quality and date. Weather information can also be maintained to support better farming decisions.
+An important part of the system is the **connection between farmers and buyers**. Users can send contact requests and interact with other users. The rating system allows farmers and buyers to provide feedback and build trust with each other.
+The database is designed using **Primary Keys and Foreign Keys** to maintain relationships between different tables and avoid unnecessary duplication of data.
+SQL queries are used to retrieve and analyze the stored information. The project includes queries using **SELECT, WHERE, ORDER BY, JOIN, GROUP BY, HAVING, aggregate functions, subqueries, CASE statements, and self joins**.
+Overall, the AgriCashew Management System provides a structured database solution for managing cashew farming information and improving interaction between **farmers and buyers**.
 
 ## 🎯 Objectives
+- Manage farmer and buyer information
+- Store farm details
+- Track cashew harvests
+- Manage farming equipment
+- Store cashew market prices
+- Store weather information
+- Allow farmers and buyers to connect
+- Manage equipment requests
+- Provide ratings and reviews
+## 🗄️ Database Name
 
-* Manage farmer and farm information.
-* Maintain land and cultivation details.
-* Record cashew harvesting activities.
-* Manage cashew sales and buyers.
-* Maintain worker information.
-* Track fertilizer usage.
-* Record farming expenses.
-* Manage farming equipment.
-* Track irrigation activities.
-* Manage pest-control activities.
-* Provide information about government subsidies.
-* Generate useful information using SQL queries.
-
-## 🗂️ Main Tables
-
-### 1. Farmers
-
-Stores information about farmers.
-
-**Important attributes:**
-
-* `FarmerID` – Primary Key
-* `FarmerName`
-* `Phone`
-* `Village`
-* `District`
-
-### 2. Farms
-
-Stores information about agricultural land.
-
-**Important attributes:**
-
-* `FarmID` – Primary Key
-* `FarmerID` – Foreign Key
-* `LandArea`
-* `Location`
-* `SoilType`
-* `CashewVariety`
-
-### 3. Harvest
-
-Stores details about cashew production.
-
-**Important attributes:**
-
-* `HarvestID` – Primary Key
-* `FarmID` – Foreign Key
-* `HarvestDate`
-* `QuantityKg`
-* `Grade`
-* `Season`
-
-### 4. Sales
-
-Stores information about cashew sales.
-
-**Important attributes:**
-
-* `SaleID` – Primary Key
-* `HarvestID` – Foreign Key
-* `BuyerName`
-* `SaleDate`
-* `QuantityKg`
-* `PricePerKg`
-* `TotalAmount`
-
-### 5. Workers
-
-Stores information about workers involved in farming activities.
-
-### 6. Fertilizers
-
-Stores fertilizer usage and application details.
-
-### 7. Expenses
-
-Stores different expenses related to cashew farming.
-
-### 8. Equipment
-
-Stores information about agricultural equipment.
-
-### 9. Irrigation
-
-Stores irrigation activities and water-management details.
-
-### 10. Pest Control
-
-Stores information about pest-control activities and treatments.
-
-### 11. Government Subsidies
-
-Stores available government subsidy information and farmer applications.
-
-## 🔗 Relationships
-
-The database uses **Primary Keys (PK)** and **Foreign Keys (FK)** to connect related tables.
-
-Examples:
-
+```sql
+agricashew
+📋 Database Tables
+===================
+The project contains the following tables:
+Users
 Farmers
-   1
-   |
-   N
- Farms
-
-One farmer can own multiple farms.
-
+Buyers
 Farms
-   1
-   |
-   N
-Harvest
+Harvests
+Equipment
+Equipment Requests
+Contact Requests
+Cashew Prices
+Weather
+Buyer Ratings
+Farmer Ratings
 
+🔗 Relationships
+====================
+The main relationships between the tables are:
+Users → Farmers : One-to-One
+Users → Buyers : One-to-One
+Farmers → Farms : One-to-Many
+Farms → Harvests : One-to-Many
+Farmers → Equipment : One-to-Many
+Equipment → Equipment Requests : One-to-Many
+Buyers → Equipment Requests : One-to-Many
+Farmers → Buyer Ratings : One-to-Many
+Buyers → Farmer Ratings : One-to-Many
 
-One farm can have multiple harvest records.
+🧩 ER Diagram
+===============
+The ER diagram represents the structure of the AgriCashew database.
+Main Entities
+==============
+Users
+Farmers
+Buyers
+Farms
+Harvests
+Equipment
+Equipment Requests
+Contact Requests
+Cashew Prices
+Weather
+Buyer Ratings
+Farmer Ratings
 
-Harvest
-   1
-   |
-   N
-Sales
+ER Diagram Symbols
+===================
+Rectangle → Entity
+Ellipse → Attribute
+Diamond → Relationship
+PK → Primary Key
+FK → Foreign Key
+1 : 1 → One-to-One
+1 : N → One-to-Many
 
+📊 Main Features
+==================
+👨‍🌾 Farmer Management
+Stores farmer information such as name, contact details, location, and farming experience.
+🌾 Farm Management
+Stores farm details such as farm name, location, area, and soil type.
 
-Harvest information can be associated with sales records.
+🌰 Harvest Management
+Stores information about cashew harvests including date, season, quantity, and quality.
 
-Other relationships connect farms with:
+🛠️ Equipment Management
+Farmers can add and manage farming equipment and buyers can request available equipment.
 
-* Workers
-* Fertilizers
-* Expenses
-* Equipment
-* Irrigation
-* Pest Control
-* Government Subsidies
+💰 Cashew Price Management
+Stores cashew market prices based on quality, date, and market location.
 
-## 🧩 ER Diagram Components
+🌦️ Weather Management
+Stores weather information such as temperature, rainfall, humidity, location, and date.
 
-The ER diagram represents:
+🤝 Farmer and Buyer Connection
+Farmers and buyers can send contact requests and communicate with each other.
 
-* **Strong Entities**
-* **Attributes**
-* **Primary Keys**
-* **Foreign Keys**
-* **Relationships**
-* **Cardinality**
-* **Composite Attributes**
-* **Derived Attributes**
-* **Weak Entities**, where applicable
+⭐ Ratings
+Farmers and buyers can give ratings and reviews to each other.
 
-## 💾 Database Technology
+🔍 SQL Queries
+=================
+The project contains SQL queries at Easy, Medium, and Hard levels.
+🟢 Easy Queries
+Display all farmers.
+Find farmers with more than 5 years of experience.
+Display Grade A harvests.
+Display available equipment.
+Find cashew prices greater than 800.
+🟡 Medium Queries
+Display farmer names and farm names.
+Display farmer names with their harvest quantities.
+Find the total harvest quantity of each farmer.
+Find the average rating of each farmer.
+Display equipment details with farmer names.
+🔴 Hard Queries
+Find the farmer with the highest total harvest.
+Find farmers with an average rating greater than 4.
+Find farmers who have both Grade A and Grade B harvests.
+Calculate the estimated value of a harvest.
+Display accepted contact requests between users.
 
-**Database:** MySQL
+🎯 SQL Concepts Used
+This project helps practice:
+=============================
+SELECT
+WHERE
+ORDER BY
+INNER JOIN
+GROUP BY
+HAVING
+Aggregate Functions
+SUM()
+AVG()
+COUNT()
+Subqueries
+CASE Statements
+Self Join
+Primary Keys
+Foreign Keys
 
-**Tools:**
+🛠️ Technologies Used
+=======================
+MySQL
+MySQL Workbench
+SQL
+Draw.io
 
-* MySQL Workbench
-* SQL
-* Draw.io / diagrams.net for ER diagrams
+🚀 How to Run
+===============
+Open MySQL Workbench.
+Create a new SQL file.
+Create the agricashew database.
+Select the database.
+Create all required tables.
+Insert the sample data.
+Run the SQL queries.
+Use SELECT * to check the data.
 
-## 🔍 SQL Operations
-
-The project supports different levels of SQL queries.
-
-### Basic Queries
-
-* Retrieve farmer details.
-* Display all farms.
-* Find farms by location.
-* Display harvest records.
-* Find farmers from a particular village.
-
-### Intermediate Queries
-
-* Use `JOIN` operations between tables.
-* Calculate total harvest quantity.
-* Calculate total sales.
-* Find average selling price.
-* Group farmers based on location.
-
-### Advanced Queries
-
-* Subqueries
-* Aggregate functions
-* Multiple-table joins
-* `GROUP BY`
-* `HAVING`
-* Views
-* Nested queries
-
-## 🌾 Benefits
-
-* Centralized management of farming data.
-* Easy tracking of land and cultivation activities.
-* Better monitoring of production and sales.
-* Helps farmers track expenses.
-* Provides information about subsidies.
-* Reduces duplicate and unorganized records.
-* Makes data retrieval faster using SQL queries.
-* Can be extended into a web-based farming management application.
-
-## 🚀 Future Enhancements
-
-The system can be extended with:
-
-* Farmer login and registration.
-* Online government subsidy applications.
-* Real-time market price information.
-* Weather information.
-* Crop disease detection.
-* Mobile application.
-* Farmer dashboard.
-* Sales and profit analysis.
-* Data visualization using Power BI or Tableau.
-* Python-based backend.
-* Web-based user interface.
-
-## 📁 Project Structure
-
-Cashew-Management-System/
+** 📁 Project Structure
+==========================
+AgriCashew-Management-System/
 │
-├── README.md
-├── database/
-│   ├── create_tables.sql
-│   └── queries.sql
-│
-├── er-diagram/
-│   └── cashew_management_er_diagram.png
+├── agricashew.sql
+├── AgriCashew ER Diagram.drawio
+└── README.md
 
+📌 Conclusion
+=================
+The AgriCashew Management System is a MySQL-based database project designed to manage important cashew farming information in an organized way. It stores details about farmers, buyers, farms, harvests, equipment, cashew prices, weather conditions, requests, connections, and ratings in separate but related tables.
+The project demonstrates the practical use of Primary Keys, Foreign Keys, table relationships, and SQL queries for managing and analyzing data. It includes SQL concepts such as SELECT, WHERE, ORDER BY, JOIN, GROUP BY, HAVING, aggregate functions, subqueries, CASE statements, and self joins.
+Overall, AgriCashew provides a structured solution for managing cashew farming activities and improving interaction between farmers and buyers. The project can be further developed into a complete web or mobile application with features such as online cashew sales, notifications, dashboards, farming suggestions, weather-based recommendations, and price prediction.
 
-## 👩‍💻 Project Summary
+## 👩‍💻 Author
 
-The **Cashew Management System** is a practical database project that demonstrates how SQL and database concepts can be applied to real-world agricultural management. It provides a structured way to manage cashew farming operations from land management and cultivation to harvesting, sales, expenses, and government support.
+**Name:** Lavanya Yalamanchi
+
+## 📌 Project Name
+
+**AgriCashew Management System**
