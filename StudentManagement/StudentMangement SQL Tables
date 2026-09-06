@@ -1,0 +1,262 @@
+Student Management System
+----------------------------
+-- Create Database
+CREATE DATABASE studentdb;
+
+-- Use Database
+USE studentdb;
+
+-- Create Students Table
+CREATE TABLE Students (
+    student_id INT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    enrollment_year INT
+);
+
+-- Create Subjects Table
+CREATE TABLE Subjects (
+    subject_id INT PRIMARY KEY,
+    subject_name VARCHAR(50)
+);
+
+-- Create Exams Table
+CREATE TABLE Exams (
+    exam_id INT PRIMARY KEY,
+    exam_name VARCHAR(50),
+    exam_date DATE
+);
+
+-- Create Marks Table
+CREATE TABLE Marks (
+    mark_id INT PRIMARY KEY,
+    student_id INT,
+    subject_id INT,
+    exam_id INT,
+    score INT,
+    
+    FOREIGN KEY (student_id) REFERENCES Students(student_id),
+    FOREIGN KEY (subject_id) REFERENCES Subjects(subject_id),
+    FOREIGN KEY (exam_id) REFERENCES Exams(exam_id)
+);
+
+
+-- Insert Students Data
+INSERT INTO Students VALUES
+(1, 'Aarav', 'Sharma', 2023),
+(2, 'Diya', 'Patel', 2023),
+(3, 'Vihaan', 'Rao', 2024),
+(4, 'Ananya', 'Singh', 2024);
+
+-- Insert Subjects Data
+INSERT INTO Subjects VALUES
+(101, 'Mathematics'),
+(102, 'Science'),
+(103, 'Hindi Literature');
+
+-- Insert Exams Data
+INSERT INTO Exams VALUES
+(1, 'Half-Yearly 2024', '2024-09-15'),
+(2, 'Final Annual 2024', '2024-03-20');
+
+-- Insert Marks Data
+INSERT INTO Marks VALUES
+(1, 1, 101, 1, 85),  
+(2, 1, 102, 1, 90),  
+(3, 2, 101, 1, 75),  
+(4, 2, 102, 1, 60),  
+(5, 3, 101, 1, 95),  
+(6, 1, 101, 2, 88),  
+(7, 2, 101, 2, 79),  
+(8, 3, 101, 2, 92);
+
+-- Verify Data
+SELECT * FROM Students;
+SELECT * FROM Subjects;
+SELECT * FROM Exams;
+SELECT * FROM Marks;
+
+
+
+
+2.   Practice Questions
+ 
+Level 1: Simple (Basic Selection & Filtering)
+ ---------------------------------------------
+1.Retrieve all students: List the first name and last name of every student.
+
+mysql> SELECT first_name, last_name
+    -> FROM Students;
++------------+-----------+
+| first_name | last_name |
++------------+-----------+
+| Aarav      | Sharma    |
+| Diya       | Patel     |
+| Vihaan     | Rao       |
+| Ananya     | Singh     |
++------------+-----------+
+4 rows in set (0.00 sec)
+
+
+2.Filter by Score: Find all entries in the Marks table where the score is greater than 80.
+
+mysql> SELECT *
+    -> FROM Marks
+    -> WHERE score > 80;
++---------+------------+------------+---------+-------+
+| mark_id | student_id | subject_id | exam_id | score |
++---------+------------+------------+---------+-------+
+|       1 |          1 |        101 |       1 |    85 |
+|       2 |          1 |        102 |       1 |    90 |
+|       5 |          3 |        101 |       1 |    95 |
+|       6 |          1 |        101 |       2 |    88 |
+|       8 |          3 |        101 |       2 |    92 |
++---------+------------+------------+---------+-------+
+5 rows in set (0.00 sec)
+
+
+
+3. Sort Data: List all exams sorted by their date, starting with the most recent.
+
+mysql> SELECT *
+    -> FROM Exams
+    -> ORDER BY exam_date DESC;
++---------+-------------------+------------+
+| exam_id | exam_name         | exam_date  |
++---------+-------------------+------------+
+|       1 | Half-Yearly 2024  | 2024-09-15 |
+|       2 | Final Annual 2024 | 2024-03-20 |
++---------+-------------------+------------+
+2 rows in set (0.00 sec)
+
+
+Level 2: Intermediate (Joins & Aggregation)
+ -------------------------------------------
+4. Student Marks: List the First Name, Subject Name, and Score for every mark recorded.
+
+mysql> SELECT
+    ->     s.first_name,
+    ->     sub.subject_name,
+    ->     m.score
+    -> FROM Marks m
+    -> JOIN Students s
+    ->     ON m.student_id = s.student_id
+    -> JOIN Subjects sub
+    ->     ON m.subject_id = sub.subject_id;
++------------+--------------+-------+
+| first_name | subject_name | score |
++------------+--------------+-------+
+| Aarav      | Mathematics  |    85 |
+| Aarav      | Science      |    90 |
+| Aarav      | Mathematics  |    88 |
+| Diya       | Mathematics  |    75 |
+| Diya       | Science      |    60 |
+| Diya       | Mathematics  |    79 |
+| Vihaan     | Mathematics  |    95 |
+| Vihaan     | Mathematics  |    92 |
++------------+--------------+-------+
+8 rows in set (0.00 sec)
+
+5. Subject Averages: Calculate the average score for each subject. Display the Subject Name and the Average Score.
+
+mysql> SELECT
+    ->     sub.subject_name,
+    ->     AVG(m.score) AS average_score
+    -> FROM Marks m
+    -> JOIN Subjects sub
+    ->     ON m.subject_id = sub.subject_id
+    -> GROUP BY sub.subject_name;
++--------------+---------------+
+| subject_name | average_score |
++--------------+---------------+
+| Mathematics  |       85.6667 |
+| Science      |       75.0000 |
++--------------+---------------+
+2 rows in set (0.00 sec)
+
+6. Count Exams: How many marks have been recorded specifically for "Aarav Sharma"?
+ 
+mysql> SELECT COUNT(*) AS total_marks
+    -> FROM Marks m
+    -> JOIN Students s
+    ->     ON m.student_id = s.student_id
+    -> WHERE s.first_name = 'Aarav'
+    ->   AND s.last_name = 'Sharma';
++-------------+
+| total_marks |
++-------------+
+|           3 |
++-------------+
+1 row in set (0.00 sec)
+
+
+ 
+Level 3: Complex (Subqueries, Grouping & Logic)
+----------------------------------------------
+7.Top Performer: Find the student (First Name, Last Name) who has the highest single score in any exam.
+
+mysql> SELECT
+    ->     s.first_name,
+    ->     s.last_name,
+    ->     m.score
+    -> FROM Students s
+    -> JOIN Marks m
+    ->     ON s.student_id = m.student_id
+    -> WHERE m.score = (
+    ->     SELECT MAX(score)
+    ->     FROM Marks
+    -> );
++------------+-----------+-------+
+| first_name | last_name | score |
++------------+-----------+-------+
+| Vihaan     | Rao       |    95 |
++------------+-----------+-------+
+1 row in set (0.00 sec)
+
+8.Scores by Exam: Display the Exam Name and the total sum of scores for that exam, but only for exams where the total sum is greater than 250.
+
+mysql> SELECT
+    ->     e.exam_name,
+    ->     SUM(m.score) AS total_score
+    -> FROM Exams e
+    -> JOIN Marks m
+    ->     ON e.exam_id = m.exam_id
+    -> GROUP BY e.exam_id, e.exam_name
+    -> HAVING SUM(m.score) > 250;
++-------------------+-------------+
+| exam_name         | total_score |
++-------------------+-------------+
+| Half-Yearly 2024  |         405 |
+| Final Annual 2024 |         259 |
++-------------------+-------------+
+2 rows in set (0.00 sec)
+
+9. Pass/Fail Label: Create a report showing the Student Name, Subject, Score, and a status column that says "Pass" if the score is 70 or above, and "Fail" if below.
+
+mysql> SELECT
+    ->     CONCAT(s.first_name, ' ', s.last_name) AS student_name,
+    ->     sub.subject_name,
+    ->     m.score,
+    ->     CASE
+    ->         WHEN m.score >= 70 THEN 'Pass'
+    ->         ELSE 'Fail'
+    ->     END AS status
+    -> FROM Marks m
+    -> JOIN Students s
+    ->     ON m.student_id = s.student_id
+    -> JOIN Subjects sub
+    ->     ON m.subject_id = sub.subject_id;
++--------------+--------------+-------+--------+
+| student_name | subject_name | score | status |
++--------------+--------------+-------+--------+
+| Aarav Sharma | Mathematics  |    85 | Pass   |
+| Aarav Sharma | Science      |    90 | Pass   |
+| Aarav Sharma | Mathematics  |    88 | Pass   |
+| Diya Patel   | Mathematics  |    75 | Pass   |
+| Diya Patel   | Science      |    60 | Fail   |
+| Diya Patel   | Mathematics  |    79 | Pass   |
+| Vihaan Rao   | Mathematics  |    95 | Pass   |
+| Vihaan Rao   | Mathematics  |    92 | Pass   |
++--------------+--------------+-------+--------+
+8 rows in set (0.05 sec)
+ 
